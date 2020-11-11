@@ -16,8 +16,22 @@ apply from: '../build.common.gradle'
 
 repositories {
     maven { url = "https://dl.bintray.com/first-tech-challenge/ftcsdk/" }
+    maven { url "https://maven.0x778.tk" }
+    maven{
+        url "https://www.jitpack.io"
+    }
+    maven {
+        url 'https://maven.google.com'
+    }
 }
 
 dependencies {
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
+    implementation 'org.openftc:opencv-repackaged:4.1.0-B'
+    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'com.github.Thomas11950:ftc265:1.4'
+
+    def rsVersion = '2.34.0-ftc265' // Change string to bump version
+    implementation 'com.intel.realsense:librealsense:' + rsVersion + '@aar'
+    implementation 'com.arcrobotics:ftclib:1.1.4'
 }

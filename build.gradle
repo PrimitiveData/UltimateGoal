@@ -3,6 +3,9 @@
  *
  * It is extraordinarily rare that you will ever need to edit this file.
  */
+apply plugin: 'maven'
+group = 'com.github.Thomas11950'
+
 buildscript {
     repositories {
         google()
@@ -19,5 +22,6 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://jitpack.io" }
     }
 }
