@@ -201,7 +201,10 @@ public class UltimateGoalTeleop extends OpMode {
         }
         if(shooterOn){
             hardware.shooter.updatePID = true;
-            hardware.shooter.shooterVeloPID.setState(shooterVelo);
+            double voltage = VelocityPIDDrivetrain.getBatteryVoltage();
+            double maxVolts = -10.5;
+            hardware.shooter.shooterMotor2.setPower(maxVolts/voltage);
+            hardware.shooter.shooterMotor1.setPower(maxVolts/voltage);
         }
         else{
             hardware.shooter.updatePID = false;

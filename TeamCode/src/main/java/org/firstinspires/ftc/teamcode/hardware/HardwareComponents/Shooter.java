@@ -45,10 +45,10 @@ public class Shooter {
         Hardware.telemetry.addData("shooter velo",currentVelo);
         Hardware.telemetry.addData("shooterPIDsetstate", shooterVeloPID.desiredState);
         prevShooterPos = shooterPos;
-        double outputPower = shooterVeloPID.updateCurrentStateAndGetOutput(currentVelo);
-        Hardware.telemetry.addData("outputVoltage",outputPower);
-        shooterMotor1.setPower(outputPower);
-        shooterMotor2.setPower(outputPower);
+        //double outputPower = shooterVeloPID.updateCurrentStateAndGetOutput(currentVelo);
+        //Hardware.telemetry.addData("outputVoltage",outputPower);
+        /*shooterMotor1.setPower(outputPower);
+        shooterMotor2.setPower(outputPower);*/
     }
     public void setRampPosition(double position){
         rampPostion = position;
