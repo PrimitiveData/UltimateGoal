@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.hardware.HardwareThreadInterface;
 
 @Autonomous(name = "RedAuto", group = "Autonomous")
 public class UltimateGoalRedAuto extends AutoMethods {
-    int stack = 0;
+    int stack = 2;
     public void runOpMode(){
         Hardware hardware = new Hardware(hardwareMap, telemetry);
         HardwareThreadInterface hardwareThreadInterface= new HardwareThreadInterface(hardware, this);
@@ -44,6 +44,14 @@ public class UltimateGoalRedAuto extends AutoMethods {
         }else{
             dropWobbler2 = new PathEngine(40, 5, "//sdcard//FIRST//UGauto//dropWobbler2Stack2.txt", hardware, this);
         }
+
+        PathEngine park = null;
+        if(stack==0) {
+            park = new PathEngine(40, 5, "//sdcard//FIRST//UGauto//parkStack0.txt", hardware, this);
+        }
+        else if(stack == 2){
+            park = new PathEngine(40, 5, "//sdcard//FIRST//UGauto//parkStack2.txt", hardware, this);
+        }
         /*
         PathEngine park;
         if(stack == 0){
@@ -60,6 +68,9 @@ public class UltimateGoalRedAuto extends AutoMethods {
         collect2ndWobbler.init();
         dropWobbler1.init();
         dropWobbler2.init();
+        if(stack == 0||stack==2) {
+            park.init();
+        }
         waitForStart();
         //first powershot
         hardware.turret.turretPID.leewayDistance = Math.toRadians(1);
@@ -142,11 +153,22 @@ public class UltimateGoalRedAuto extends AutoMethods {
         }
         else{
             goStraight(0.4,50,hardware);
-            turnTo(-164.054604099,1500,hardware);
+            turnTo(-162.054604099,1500,hardware);
         }
-        MoveArmDownAfterDropping1stWobbler moveArmDownAfterDropping1stWobbler = new MoveArmDownAfterDropping1stWobbler(hardware,this);
-        moveArmDownAfterDropping1stWobbler.start();
-        collect2ndWobbler.run(hardware.time,20,0.7,false);
+        if(stack==1) {
+            MoveArmDownAfterDropping1stWobbler moveArmDownAfterDropping1stWobbler = new MoveArmDownAfterDropping1stWobbler(hardware, this);
+            moveArmDownAfterDropping1stWobbler.start();
+        }
+        else{
+            hardware.wobbler.moveArmToGrabPos();
+        }
+        if(stack == 0){
+            collect2ndWobbler.run(hardware.time,40,0.7,false);
+        }else if(stack==1){
+            collect2ndWobbler.run(hardware.time, 20, 0.7, false);
+        }else{
+            collect2ndWobbler.run(hardware.time,30,0.7,false);
+        }
         hardware.wobbler.gripWobble();
         sleep(500);
         hardware.wobbler.raiseWobble();
@@ -156,10 +178,28 @@ public class UltimateGoalRedAuto extends AutoMethods {
         }else {
             turnTo(-360, 1000, hardware);
         }
-        dropWobbler2.run(hardware.time,20,0.7,false);
+
+        if(stack==0){
+            dropWobbler2.run(hardware.time,60,0.7,false);
+        }
+        else if(stack == 1) {
+            dropWobbler2.run(hardware.time, 20, 0.7, false);
+        }
+        else{
+            dropWobbler2.run(hardware.time,10,0.7,false);
+        }
         hardware.wobbler.goToAutoWobblerDropPosition();
         sleep(750);
         hardware.wobbler.releaseWobble();
         sleep(250);
+        hardware.wobbler.goToWobbleStartingPos();
+        if(stack == 0) {
+            turnTo(-270, 1000, hardware);
+            park.run(hardware.time,20,0.7,false);
+        }
+        else if(stack == 2){
+            park.run(hardware.time,20,0.7,true);
+        }
+
     }
 }

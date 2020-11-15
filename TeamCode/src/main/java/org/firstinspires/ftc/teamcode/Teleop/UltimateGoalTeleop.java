@@ -8,6 +8,8 @@ import org.firstinspires.ftc.teamcode.MathFunctions;
 import org.firstinspires.ftc.teamcode.Teleop.Multithreads.MagFlickerController;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.Mag;
+import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPID;
+import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPIDDrivetrain;
 
 @TeleOp(name = "UltimateGoalTeleop",group="TeleOp")
 public class UltimateGoalTeleop extends OpMode {
@@ -55,7 +57,7 @@ public class UltimateGoalTeleop extends OpMode {
     public void loop(){
         double leftPower;
         double rightPower;
-        if(gamepad1.left_bumper) {
+        if(gamepad1.left_trigger > 0) {
             if(!slowModeToggledPrevLoop) {
                 slowMode = !slowMode;
             }
@@ -198,9 +200,11 @@ public class UltimateGoalTeleop extends OpMode {
             }
         }
         if(shooterOn){
-            hardware.shooter.updatePID = true;
-            hardware.shooter.shooterMotor2.setPower(-1);
-            hardware.shooter.shooterMotor1.setPower(-1);
+            hardware.shooter.updatePID = false;
+            double maxVoltage = 10.5;
+            double power = maxVoltage/VelocityPIDDrivetrain.getBatteryVoltage();
+            hardware.shooter.shooterMotor2.setPower(-power);
+            hardware.shooter.shooterMotor1.setPower(-power);
         }
         else{
             hardware.shooter.updatePID = false;
