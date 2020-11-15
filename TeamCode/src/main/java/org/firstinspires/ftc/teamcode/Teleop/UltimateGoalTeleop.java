@@ -206,8 +206,8 @@ public class UltimateGoalTeleop extends OpMode {
         }
         else{
             hardware.shooter.updatePID = false;
-            hardware.shooter.shooterMotor2.setPower(0);
-            hardware.shooter.shooterMotor1.setPower(0);
+            hardware.shooter.shooterMotor2.setPower(-0.5);
+            hardware.shooter.shooterMotor1.setPower(-0.5);
         }
         //Flicker
         if(gamepad2.x){
