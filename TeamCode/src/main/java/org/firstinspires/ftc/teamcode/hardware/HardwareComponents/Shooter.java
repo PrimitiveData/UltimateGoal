@@ -30,7 +30,7 @@ public class Shooter {
         this.shooterMotor1.motor.setDirection(DcMotorEx.Direction.FORWARD);
         this.shooterMotor2.motor.setDirection(DcMotorEx.Direction.FORWARD);
         this.hardware = hardware;
-        shooterVeloPID = new ShooterPID(0.0025,0.001,0,0.005,2.84,0,75,hardware.time,"/sdcard/FIRST/shooterFFdata.txt");
+        shooterVeloPID = new ShooterPID(0.0025,0.001,0,0.00631,1.74,0,75,hardware.time,"/sdcard/FIRST/shooterFFdata.txt");
         shooterVeloPID.integralAntiWindupActive = false;
         updatePID = false;
         info = new AutoShootInfo();
