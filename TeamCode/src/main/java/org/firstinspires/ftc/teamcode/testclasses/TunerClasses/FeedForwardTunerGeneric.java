@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @TeleOp(name="fftunergeneric", group="TeleOp")
 public class FeedForwardTunerGeneric extends LinearOpMode {
-    final double ZERO_TO_MAX_TIME = 20000;//milliseconds
+    final double ZERO_TO_MAX_TIME = 30000;//milliseconds
     public void runOpMode(){
         DcMotor toTest = hardwareMap.get(DcMotor.class,"FFTuned");
         DcMotor toTest2 = hardwareMap.get(DcMotor.class,"FFTuned2");
@@ -33,8 +33,8 @@ public class FeedForwardTunerGeneric extends LinearOpMode {
         double prevVelo = 0;
         while(!isStopRequested() && currentTime < startTime + ZERO_TO_MAX_TIME){
             double powerToSet = (currentTime-startTime)/ZERO_TO_MAX_TIME;
-            toTest.setPower(powerToSet);
-            toTest2.setPower(powerToSet);
+            toTest.setPower(-powerToSet);
+            toTest2.setPower(-powerToSet);
             sleep(50);
             double currentPosition = toTest.getCurrentPosition();
             currentTime = time.milliseconds();
@@ -53,16 +53,6 @@ public class FeedForwardTunerGeneric extends LinearOpMode {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        double powerToSet = 1;
-        while(!isStopRequested()){
-            toTest.setPower(powerToSet);
-            toTest2.setPower(powerToSet);
-            powerToSet -= gamepad1.left_stick_y*0.01;
-            telemetry.addData("power",powerToSet* getBatteryVoltage());
-            telemetry.update();
-            sleep(100);
-
         }
     }
     public double getBatteryVoltage() {
