@@ -11,6 +11,8 @@ import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.Mag;
 import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPID;
 import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPIDDrivetrain;
 
+import java.io.IOException;
+
 @TeleOp(name = "UltimateGoalTeleop",group="TeleOp")
 public class UltimateGoalTeleop extends OpMode {
     Hardware hardware;
@@ -324,5 +326,10 @@ public class UltimateGoalTeleop extends OpMode {
     public void stop(){
         //T265.slamra.stop();
         teleopStopped = true;
+        try {
+            magFlickerController.writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
