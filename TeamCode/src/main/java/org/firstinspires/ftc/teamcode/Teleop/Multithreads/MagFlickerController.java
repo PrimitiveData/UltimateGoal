@@ -4,6 +4,8 @@ import org.firstinspires.ftc.teamcode.Teleop.UltimateGoalTeleop;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.Mag;
 
+import kotlin.jvm.internal.Intrinsics;
+
 public class MagFlickerController extends Thread{
     public Hardware hardware;
     UltimateGoalTeleop parentOP;
@@ -11,6 +13,17 @@ public class MagFlickerController extends Thread{
     public MagFlickerController(Hardware hardware, UltimateGoalTeleop parentOP){
         this.hardware = hardware;
         this.parentOP = parentOP;
+        shootRingRequested = false;
+    }
+    public void sleeep(double milliseconds){
+        double startTime = hardware.time.milliseconds();
+        while(hardware.time.milliseconds() < startTime + milliseconds && !parentOP.teleopStopped){
+            try{
+                Thread.sleep(10);
+            }catch(InterruptedException e){
+
+            }
+        }
     }
     public void run(){
         while(!parentOP.teleopStopped){
@@ -20,25 +33,13 @@ public class MagFlickerController extends Thread{
                     hardware.mag.setRingPusherResting();
                 }
                 else{
-                    try{
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    sleeep(500);
                     hardware.shooter.shooterVeloPID.speedyRecoveryOn = false;
                     hardware.mag.pushInRings();
-                    try{
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    sleeep(500);
                     hardware.shooter.shooterVeloPID.speedyRecoveryOn = true;
                     hardware.mag.setRingPusherResting();
-                    try{
-                        Thread.sleep(250);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    sleeep(250);
                     if(hardware.mag.currentState == Mag.State.BOTTOM){
                         hardware.mag.updateStateAndSetPosition();
                     }
