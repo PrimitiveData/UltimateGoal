@@ -258,8 +258,8 @@ public class UltimateGoalTeleop extends OpMode {
         else if(hardware.mag.currentState == Mag.State.MID){
             telemetry.addLine("Mag State: MID");
         }
-        else if(hardware.mag.currentState == Mag.State.BOTTOM){
-            telemetry.addLine("Mag State: BOTTOM");
+        else if(hardware.mag.currentState == Mag.State.TOP){
+            telemetry.addLine("Mag State: TOP");
         }
         else{
             telemetry.addLine("Mag State: COLLECT");

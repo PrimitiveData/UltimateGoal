@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Teleop.Multithreads;
 
+import com.qualcomm.robotcore.util.RobotLog;
+
 import org.firstinspires.ftc.teamcode.Teleop.UltimateGoalTeleop;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.Mag;
@@ -10,10 +12,12 @@ public class MagFlickerController extends Thread{
     public Hardware hardware;
     UltimateGoalTeleop parentOP;
     boolean shootRingRequested;
+    boolean firstButtonPress = false;
     public MagFlickerController(Hardware hardware, UltimateGoalTeleop parentOP){
         this.hardware = hardware;
         this.parentOP = parentOP;
         shootRingRequested = false;
+        firstButtonPress = true;
     }
     public void sleeep(double milliseconds){
         double startTime = hardware.time.milliseconds();
@@ -29,6 +33,10 @@ public class MagFlickerController extends Thread{
         while(!parentOP.teleopStopped){
             if(shootRingRequested){
                 hardware.mag.updateStateAndSetPosition();
+                if(firstButtonPress){
+                    hardware.mag.currentState = Mag.State.TOP;
+                    firstButtonPress = false;
+                }
                 if(hardware.mag.currentState == Mag.State.COLLECT){
                     hardware.mag.setRingPusherResting();
                 }
