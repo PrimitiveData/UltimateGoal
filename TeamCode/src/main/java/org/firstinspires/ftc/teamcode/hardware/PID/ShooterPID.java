@@ -40,9 +40,9 @@ public class ShooterPID extends VelocityPID {
             e.printStackTrace();
         }
         double voltage = VelocityPIDDrivetrain.getBatteryVoltage();
-        if(currentVelocity > desiredState+75 && speedyRecoveryOn){
+        /*if(currentVelocity > desiredState+75 && speedyRecoveryOn){
             return -1;
-        }
+        }*/
         if(desiredState > 0) {
             return (error * kP + integral * kI + derivative * kD + kStatic + (desiredState * kV))/voltage;
         }

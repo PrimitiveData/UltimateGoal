@@ -46,8 +46,9 @@ public class UltimateGoalTeleop extends OpMode {
         }*/
         hardware = new Hardware(hardwareMap,telemetry);
         slowMode = false;
-        shooterVelo = -1600;
+        shooterVelo = -1400;
         magFlickerController = new MagFlickerController(hardware,this);
+        hardware.mag.setRingPusherResting();
     }
     public double logistic(double input, double constantB, double constantC){
         return constantB*(1/(1+Math.pow(Math.E,-constantC*(input-0.6)))) - constantB/2+0.5532;
@@ -203,10 +204,11 @@ public class UltimateGoalTeleop extends OpMode {
         }
         if(shooterOn){
             hardware.shooter.updatePID = true;
-            double voltage = VelocityPIDDrivetrain.getBatteryVoltage();
+            /*double voltage = VelocityPIDDrivetrain.getBatteryVoltage();
             double maxVolts = -10.5;
             hardware.shooter.shooterMotor2.setPower(maxVolts/voltage);
-            hardware.shooter.shooterMotor1.setPower(maxVolts/voltage);
+            hardware.shooter.shooterMotor1.setPower(maxVolts/voltage);*/
+            hardware.shooter.shooterVeloPID.setState(shooterVelo);
         }
         else{
             hardware.shooter.updatePID = false;
