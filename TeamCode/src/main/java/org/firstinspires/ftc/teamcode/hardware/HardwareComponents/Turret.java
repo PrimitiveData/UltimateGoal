@@ -19,6 +19,7 @@ public class Turret {
     public boolean updatePID;
     public double maxCounterClockwise=180;
     public double maxClockwise=180;
+    AutoShootInfo info;
     public Turret(ContRotServo[] turretServos, Motor encoder, Hardware hardware){
         this.turretServos = turretServos;
         this.hardware = hardware;
@@ -28,9 +29,23 @@ public class Turret {
         //turretPID = new TurretPID(1,1,1,Math.toRadians(20),hardware.time);
         turretPID = new PIDwithBasePower(0.7/Math.toRadians(40),0.3,0.3,0.15,Math.toRadians(1.5),Math.toRadians(20), hardware.time);
         updatePID = false;
+        info = new AutoShootInfo();
     }
     public double getTurretOffset(double distanceToGoal){
-        return distanceToGoal * -0.00126 + 0.306;
+        double turretAngleOffset = 0;
+        for(int i = 0; i < info.distances.size()-1; i++){
+            if(MathFunctions.isInBetween(info.distances.get(i), info.distances.get(i+1), distanceToGoal)){
+                double slope = (info.turretAngleOffsets.get(i+1) - info.turretAngleOffsets.get(i))/(info.distances.get(i+1)-info.distances.get(i));
+                turretAngleOffset = slope*(distanceToGoal - info.distances.get(i))+info.turretAngleOffsets.get(i);
+            }
+        }
+        if(distanceToGoal > info.distances.get(info.distances.size()-1)){
+            turretAngleOffset = info.turretAngleOffsets.get(info.turretAngleOffsets.size()-1);
+        }
+        if(distanceToGoal < info.distances.get(0)){
+            turretAngleOffset = info.turretAngleOffsets.get(0);
+        }
+        return turretAngleOffset;
     }
     public void setTurretAngle(double globalTurretAngle){//global turret angle is the angle with respect to the field, local is the angle with respect to the robot
         double desiredLocalTurretAngle = MathFunctions.keepAngleWithin180Degrees(globalTurretAngle - hardware.angle);

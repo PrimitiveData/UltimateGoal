@@ -58,7 +58,6 @@ public class Shooter {
         double rampAngle = 0;
         for(int i = 0; i < info.distances.size()-1; i++){
             if(MathFunctions.isInBetween(info.distances.get(i), info.distances.get(i+1), distanceToGoal)){
-                Hardware.telemetry.addData("index of point",i);
                 double slope = (info.rampAngles.get(i+1) - info.rampAngles.get(i))/(info.distances.get(i+1)-info.distances.get(i));
                 rampAngle = slope*(distanceToGoal - info.distances.get(i))+info.rampAngles.get(i);
             }
