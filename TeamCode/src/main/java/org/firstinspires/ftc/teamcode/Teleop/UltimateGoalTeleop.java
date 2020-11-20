@@ -109,6 +109,10 @@ public class UltimateGoalTeleop extends OpMode {
         else{
             telemetry.addLine("Pose Confidence Low");
         }*/
+        //intake dropper
+        if(gamepad1.y){
+            hardware.intake.dropIntake();
+        }
         //manuel turret control toggle & turret control
         if(gamepad2.a) {
             if(!manuelTurretControlToggledPrevLoop) {
