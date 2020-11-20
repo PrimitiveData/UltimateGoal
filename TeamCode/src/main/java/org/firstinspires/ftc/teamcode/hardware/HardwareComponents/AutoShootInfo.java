@@ -11,6 +11,7 @@ public class AutoShootInfo {
     public AutoShootInfo(){
         this.distances = new ArrayList<Double>();
         this.rampAngles = new ArrayList<Double>();
+        this.turretAngleOffsets = new ArrayList<Double>();
         distances.add(52.0);
         distances.add(56.0);
         distances.add(60.0);
