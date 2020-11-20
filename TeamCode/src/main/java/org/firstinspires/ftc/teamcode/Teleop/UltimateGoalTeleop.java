@@ -15,6 +15,7 @@ import java.io.IOException;
 
 @TeleOp(name = "UltimateGoalTeleop",group="TeleOp")
 public class UltimateGoalTeleop extends OpMode {
+    double angleWhenIntakeIsOn = 0; // degrees
     Hardware hardware;
     boolean slowMode = false;
     boolean slowModeToggledPrevLoop = false;
@@ -142,12 +143,7 @@ public class UltimateGoalTeleop extends OpMode {
                 intakeOnToggledPrevLoop = false;
             }
         }
-        if(intakeOn) {
-            hardware.intake.turnIntake(1);
-        }
-        else{
-            hardware.intake.turnIntake(0);
-        }
+
         //mag control
         if(gamepad1.right_bumper) {
             if(!magUpdateStateAndSetPositionPrevLoop) {
@@ -185,7 +181,20 @@ public class UltimateGoalTeleop extends OpMode {
             hardware.turret.updatePID = true;
             hardware.turret.setTurretAngle(angleToGoal);
         }
-
+        //intake control continued
+        if(intakeOn) {
+            manuelRampControl = true;
+            hardware.turret.updatePID = true;
+            hardware.turret.setTurretAngle(angleWhenIntakeIsOn);
+            if(gamepad1.a){
+                hardware.intake.turnIntake(-1);
+            }else {
+                hardware.intake.turnIntake(1);
+            }
+        }
+        else{
+            hardware.intake.turnIntake(0);
+        }
         //shooter
         if(gamepad1.left_bumper) {
             if(!shooterOnTogglePrevLoop) {
