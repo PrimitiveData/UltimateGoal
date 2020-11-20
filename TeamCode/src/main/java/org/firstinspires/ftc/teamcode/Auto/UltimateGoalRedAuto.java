@@ -78,7 +78,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardwareThreadInterface.start();
         hardware.shooter.setRampPosition(0);
         hardware.shooter.shooterVeloPID.setState(-1600);
-        hardware.shooter.updatePID = false;
+        hardware.shooter.updatePID = true;
         hardware.turret.turretPID.setState(Math.toRadians(-183.5));
         hardware.turret.updatePID = true;
         goToShootPos.run(hardware.time,20,0.7,false);
@@ -127,6 +127,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardware.turret.updatePID = false;
         hardware.turret.setAllTurretServoPowers(0);
         hardware.intake.turnIntake(0);
+        /*
         if(stack==1) {
             turnTo(-14, 1000, hardware);
         }
@@ -200,6 +201,6 @@ public class UltimateGoalRedAuto extends AutoMethods {
         else if(stack == 2){
             park.run(hardware.time,20,0.7,true);
         }
-
+*/
     }
 }
