@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.hardware.HardwareComponents;
 import org.firstinspires.ftc.teamcode.hardware.RegServo;
 
 public class Mag {
-    RegServo magServo;
+    public RegServo magServo;
     RegServo ringPusher;
     double ringPusherResting = 0.54905;
     double ringPusherPushedIn = 0.424;
