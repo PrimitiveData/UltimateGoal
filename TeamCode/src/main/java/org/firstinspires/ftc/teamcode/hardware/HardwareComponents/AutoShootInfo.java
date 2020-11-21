@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.hardware.HardwareComponents;
 
-import android.os.storage.StorageManager;
 
 import java.util.ArrayList;
 
@@ -8,10 +7,12 @@ public class AutoShootInfo {
     public ArrayList<Double> distances;
     public ArrayList<Double> rampAngles;
     public ArrayList<Double> turretAngleOffsets;
+    public ArrayList<Double> shooterSpeeds;
     public AutoShootInfo(){
         this.distances = new ArrayList<Double>();
         this.rampAngles = new ArrayList<Double>();
         this.turretAngleOffsets = new ArrayList<Double>();
+        this.shooterSpeeds = new ArrayList<Double>();
         distances.add(52.0);
         distances.add(56.0);
         distances.add(60.0);

@@ -66,4 +66,14 @@ public class Shooter {
         Hardware.telemetry.addData("rampAngle",rampAngle+angleAdjustmentConstant);
         setRampPosition(rampAngle);
     }
+    public double autoaimShooterSpeed(double distanceToGoal){
+        double shooterVelo = 0;
+        for(int i = 0; i < info.distances.size()-1; i++){
+            if(MathFunctions.isInBetween(info.distances.get(i), info.distances.get(i+1), distanceToGoal)){
+                double slope = (info.shooterSpeeds.get(i+1) - info.shooterSpeeds.get(i))/(info.distances.get(i+1)-info.distances.get(i));
+                shooterVelo = slope*(distanceToGoal - info.distances.get(i))+info.shooterSpeeds.get(i);
+            }
+        }
+        return shooterVelo;
+    }
 }

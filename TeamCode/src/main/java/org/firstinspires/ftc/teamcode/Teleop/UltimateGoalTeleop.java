@@ -193,6 +193,7 @@ public class UltimateGoalTeleop extends OpMode {
             hardware.shooter.autoRampPositionForHighGoal(distanceToGoal);
             hardware.turret.updatePID = true;
             hardware.turret.setTurretAngle(angleToGoal);
+            shooterVelo = hardware.shooter.autoaimShooterSpeed(distanceToGoal);
         }
         //shooter
         if(gamepad1.left_bumper) {
