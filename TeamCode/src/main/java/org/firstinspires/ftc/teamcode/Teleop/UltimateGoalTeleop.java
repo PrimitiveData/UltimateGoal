@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.MathFunctions;
 import org.firstinspires.ftc.teamcode.Teleop.Multithreads.MagFlickerController;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.Mag;
+import org.firstinspires.ftc.teamcode.hardware.PID.TurretPID;
 import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPID;
 import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPIDDrivetrain;
 
@@ -259,6 +260,16 @@ public class UltimateGoalTeleop extends OpMode {
                 armStateToggledPrevLoop = false;
             }
         }
+        //end powershot
+        if(gamepad1.a){
+            hardware.mag.currentState = Mag.State.COLLECT;
+            turnTo(3,1000,hardware);
+            shootPowershot(hardware);
+            turnTo(-2,1000,hardware);
+            shootPowershot(hardware);
+            turnTo(-9,1000,hardware);
+            shootPowershot(hardware);
+        }
         if(gamepad1.dpad_up){
             shooterVelo -= 0.5;
         }else if(gamepad1.dpad_down){
@@ -341,6 +352,35 @@ public class UltimateGoalTeleop extends OpMode {
             magFlickerController.writer.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public void shootPowershot(Hardware hardware) {
+        hardware.mag.updateStateAndSetPosition();
+        sleeep(225);
+        hardware.mag.pushInRings();
+        sleeep(175);
+        hardware.mag.setRingPusherResting();
+        sleeep(175);
+    }
+    public void turnTo(double targetAngleRadians, double duration, Hardware hardware) {
+        TurretPID headingPID = new TurretPID(1.2, 6, 0.12, Math.toRadians(20), hardware.time);
+        headingPID.setState(Math.toRadians(targetAngleRadians));
+        double startTime = hardware.time.milliseconds();
+        while (!teleopStopped && hardware.time.milliseconds() - startTime < duration) {
+            double output = headingPID.updateCurrentStateAndGetOutput(hardware.angle);
+            hardware.sixWheelDrive.turn(output);
+            hardware.loop();
+        }
+        hardware.sixWheelDrive.turn(0);
+    }
+    public void sleeep(double milliseconds){
+        double startTime = hardware.time.milliseconds();
+        while(hardware.time.milliseconds() < startTime + milliseconds && !teleopStopped){
+            try{
+                Thread.sleep(10);
+            }catch(InterruptedException e){
+
+            }
         }
     }
 }

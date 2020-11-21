@@ -87,6 +87,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         turnTo(-2,1000,hardware);
         shootPowershot(hardware);
         turnTo(-9,1000,hardware);
+        shootPowershot(hardware);
         //2nd powershot
         /*
         hardware.mag.setRingPusherResting();
