@@ -263,6 +263,12 @@ public class UltimateGoalTeleop extends OpMode {
         //end powershot
         if(gamepad1.a){
             hardware.mag.currentState = Mag.State.COLLECT;
+            hardware.mag.collectRings();
+            manuelRampControl = true;
+            hardware.turret.setTurretAngle(hardware.angle);
+            while(Math.abs((hardware.turret.localTurretAngleRadians() - hardware.turret.startTurretPosition))>Math.toRadians(1)){
+                sleeep(10);
+            }
             turnTo(3,1000,hardware);
             shootPowershot(hardware);
             turnTo(-2,1000,hardware);
