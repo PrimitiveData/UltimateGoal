@@ -79,16 +79,14 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardware.shooter.setRampPosition(0);
         hardware.shooter.shooterVeloPID.setState(-1600);
         hardware.shooter.updatePID = true;
-        hardware.turret.turretPID.setState(Math.toRadians(-183.5));
+        hardware.turret.turretPID.setState(Math.toRadians(-180));
         hardware.turret.updatePID = true;
         goToShootPos.run(hardware.time,20,0.7,false);
-        turnTo(0,1000,hardware);
-        sleep(1000);
-        hardware.mag.updateStateAndSetPosition();
-        sleep(750);
-        hardware.mag.pushInRings();
-        sleep(500);
-        hardware.mag.setRingPusherResting();
+        turnTo(3,1000,hardware);
+        shootPowershot(hardware);
+        turnTo(-2,1000,hardware);
+        shootPowershot(hardware);
+        turnTo(-9,1000,hardware);
         //2nd powershot
         /*
         hardware.mag.setRingPusherResting();
@@ -103,7 +101,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardware.mag.pushInRings();
         sleep(500);
         */
-        turnTo(-90,1500,hardware);
+        /*turnTo(-90,1500,hardware);
 
 
         double[] turretPosition = MathFunctions.transposeCoordinate(hardware.getXAbsoluteCenter(),hardware.getYAbsoluteCenter(),-4.72974566929,hardware.angle);
@@ -122,7 +120,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
             }
             hardware.mag.setRingPusherResting();
             sleep(250);
-        }
+        }*/
         hardware.shooter.updatePID = false;
         hardware.turret.updatePID = false;
         hardware.turret.setAllTurretServoPowers(0);
