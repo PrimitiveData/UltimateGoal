@@ -84,7 +84,8 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardware.turret.turretPID.setState(Math.toRadians(-177));
         hardware.turret.updatePID = true;
         goToShootPos.run(hardware.time,20,0.7,false);
-        hardware.mag.currentState = Mag.State.COLLECT;
+        hardware.mag.currentState = Mag.State.TOP;
+        hardware.mag.feedTopRing();
         shootPowershot(hardware);
         telemetry.addLine("1st powershot");
         telemetry.update();

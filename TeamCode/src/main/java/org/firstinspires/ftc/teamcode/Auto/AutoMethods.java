@@ -31,11 +31,10 @@ public abstract class AutoMethods extends LinearOpMode {
     }
 
     public void shootPowershot(Hardware hardware) {
-        hardware.mag.updateStateAndSetPosition();
-        sleep(225);
         hardware.mag.pushInRings();
         sleep(175);
         hardware.mag.setRingPusherResting();
         sleep(200);
+        hardware.mag.updateStateAndSetPosition();
     }
 }
