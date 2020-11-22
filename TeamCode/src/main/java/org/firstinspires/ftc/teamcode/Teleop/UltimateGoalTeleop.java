@@ -48,7 +48,7 @@ public class UltimateGoalTeleop extends OpMode {
         }*/
         hardware = new Hardware(hardwareMap,telemetry);
         slowMode = false;
-        shooterVelo = -1400;
+        shooterVelo = -1600;
         magFlickerController = new MagFlickerController(hardware,this);
         hardware.mag.setRingPusherResting();
     }
@@ -171,7 +171,7 @@ public class UltimateGoalTeleop extends OpMode {
             }
         }
         //ramp manuel control and automatic control
-        if(gamepad2.b) {
+        if(gamepad1.x) {
             if(!manuelRampControlTogglePrevLoop) {
                 manuelRampControl = !manuelRampControl;
             }

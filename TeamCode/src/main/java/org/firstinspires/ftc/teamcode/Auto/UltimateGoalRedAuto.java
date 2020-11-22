@@ -73,29 +73,31 @@ public class UltimateGoalRedAuto extends AutoMethods {
             park.init();
         }
         hardware.mag.setRingPusherResting();
+        hardware.mag.currentState = Mag.State.TOP;
+        hardware.mag.magServo.servo.setPosition(0.35);
         waitForStart();
         //first powershot
         hardware.turret.turretPID.leewayDistance = Math.toRadians(1);
         hardware.intake.turnIntake(1);
         hardwareThreadInterface.start();
         hardware.shooter.setRampPosition(0);
-        hardware.shooter.shooterVeloPID.setState(-1600);
+        hardware.shooter.shooterVeloPID.setState(-1500);
         hardware.shooter.updatePID = true;
-        hardware.turret.turretPID.setState(Math.toRadians(-177));
+        hardware.turret.turretPID.setState(Math.toRadians(-180));
         hardware.turret.updatePID = true;
         goToShootPos.run(hardware.time,20,0.7,false);
-        hardware.mag.currentState = Mag.State.TOP;
         hardware.mag.feedTopRing();
+        sleep(100);
         shootPowershot(hardware);
         telemetry.addLine("1st powershot");
         telemetry.update();
-        hardware.turret.turretPID.setState(-182);
-        sleep(500);
+        hardware.turret.turretPID.setState(Math.toRadians(-184));
+        sleep(300);
         shootPowershot(hardware);
         telemetry.addLine("2nd powershot");
         telemetry.update();
-        hardware.turret.turretPID.setState(-189);
-        sleep(500);
+        hardware.turret.turretPID.setState(Math.toRadians(-193));
+        sleep(300);
         shootPowershot(hardware);
         telemetry.addLine("3rd powershot");
         telemetry.update();

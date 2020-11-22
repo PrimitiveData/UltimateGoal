@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @TeleOp(name="fftunergeneric", group="TeleOp")
 public class FeedForwardTunerGeneric extends LinearOpMode {
-    final double ZERO_TO_MAX_TIME = 30000;//milliseconds
+    final double ZERO_TO_MAX_TIME = 120000;//milliseconds
     public void runOpMode(){
         DcMotor toTest = hardwareMap.get(DcMotor.class,"FFTuned");
         DcMotor toTest2 = hardwareMap.get(DcMotor.class,"FFTuned2");

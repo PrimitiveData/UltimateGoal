@@ -21,7 +21,7 @@ public class Shooter {
     public boolean updatePID;
     public double rampPostion = 0;
     AutoShootInfo info;
-    public double angleAdjustmentConstant=-0.05;
+    public double angleAdjustmentConstant=0;
     public Shooter(Motor shooterMotor1, Motor shooterMotor2, RegServo shootAngleController, Hardware hardware){
         this.shootAngleController = shootAngleController;
         this.shooterMotor1 = shooterMotor1;
@@ -30,7 +30,7 @@ public class Shooter {
         this.shooterMotor1.motor.setDirection(DcMotorEx.Direction.FORWARD);
         this.shooterMotor2.motor.setDirection(DcMotorEx.Direction.FORWARD);
         this.hardware = hardware;
-        shooterVeloPID = new ShooterPID(0.0025,0.002,0,0.00522,1.62,0,75,hardware.time,"/sdcard/FIRST/shooterFFdata.txt");
+        shooterVeloPID = new ShooterPID(0.025,0.02,0,0.00522,1.62,0,75,hardware.time,"/sdcard/FIRST/shooterFFdata.txt");
         shooterVeloPID.integralAntiWindupActive = true;
         updatePID = false;
         info = new AutoShootInfo();

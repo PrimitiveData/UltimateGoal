@@ -8,9 +8,9 @@ public class Mag {
     double ringPusherResting = 0.54905;
     double ringPusherPushedIn = 0.424;
     double takeRingsPosition=0.4814;
-    double feedTopRingPosition=0.291866;
-    double feedMiddleRingPosition=0.26446;
-    double feedBottomRingPosition=0.23693;
+    public double feedTopRingPosition=0.289;
+    double feedMiddleRingPosition=0.258;
+    double feedBottomRingPosition=0.219;
     public State currentState;
     public Mag(RegServo magServo, RegServo ringPusher){
         this.magServo = magServo;

@@ -80,7 +80,7 @@ public class MagFlickerController extends Thread{
                     }
                 }
                 else{
-                    sleeep(500);
+                    sleeep(225);
                     hardware.shooter.shooterVeloPID.speedyRecoveryOn = false;
                     hardware.mag.pushInRings();
                     RobotLog.dd(TAG,numButtonPresses+" press checkpoint 5 time: " + hardware.time.milliseconds());
@@ -89,7 +89,7 @@ public class MagFlickerController extends Thread{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    sleeep(500);
+                    sleeep(175);
                     hardware.shooter.shooterVeloPID.speedyRecoveryOn = true;
                     hardware.mag.setRingPusherResting();
                     RobotLog.dd(TAG,numButtonPresses+" press checkpoint 6 time: " + hardware.time.milliseconds());
@@ -98,7 +98,7 @@ public class MagFlickerController extends Thread{
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    sleeep(250);
+                    sleeep(175);
                     if(hardware.mag.currentState == Mag.State.BOTTOM){
                         hardware.mag.updateStateAndSetPosition();
                     }
