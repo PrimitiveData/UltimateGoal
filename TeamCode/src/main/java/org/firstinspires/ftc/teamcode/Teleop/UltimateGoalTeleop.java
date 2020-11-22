@@ -276,6 +276,7 @@ public class UltimateGoalTeleop extends OpMode {
             turnTo(-9,1000,hardware);
             shootPowershot(hardware);
         }
+
         if(gamepad1.dpad_up){
             shooterVelo -= 0.5;
         }else if(gamepad1.dpad_down){
