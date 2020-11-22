@@ -99,7 +99,8 @@ public class AutoShootInfo {
         }
 
         for(int i = 0; i < turretAngleOffsets.size(); i++){
-            turretAngleOffsets.set(i, Math.toRadians(turretAngleOffsets.get(i)));
+            turretAngleOffsets.set(i, Math.toRadians(turretAngleOffsets.get(i) - 2));
+
         }
     }
 }

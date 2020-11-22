@@ -10,14 +10,14 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 public class UltimateGoalReturnPositionPipeline extends OpenCvPipeline {
-    public int BOTTOMLEFTX = 533;
+    public int BOTTOMLEFTX = 532;
     public int BOTTOMLEFTY = 233;//bot left coordinates of small 1 ring box
-    public int WIDTH = 79;//width of 1 ring box
-    public int HEIGHT1 = 33;//height of 1 ring
-    public int BUFFER = 12;
-    public int HEIGHT2 = 51;//height of 4 rings
-    public double HThresholdLow = 7;
-    public double HThresholdHigh = 13;
+    public int WIDTH = 67;//width of 1 ring box
+    public int HEIGHT1 = 29;//height of 1 ring
+    public int BUFFER = 11;
+    public int HEIGHT2 = 46;//height of 4 rings
+    public double HThresholdLow = 10;
+    public double HThresholdHigh = 18;
     public int stack;
     @Override
     public Mat processFrame(Mat input) {

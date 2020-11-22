@@ -188,6 +188,7 @@ public class UltimateGoalTeleop extends OpMode {
         }
         else{
             double[] turretPosition = MathFunctions.transposeCoordinate(hardware.getXAbsoluteCenter(),hardware.getYAbsoluteCenter(),-4.72974566929,hardware.angle);
+            telemetry.addLine("Turret Position: "+turretPosition[0]+", "+turretPosition[1]);
             double distanceToGoal = Math.hypot(turretPosition[1]- FieldConstants.highGoalPosition[1],turretPosition[0] - FieldConstants.highGoalPosition[0]);
             double angleToGoal = Math.atan2(FieldConstants.highGoalPosition[1]-turretPosition[1], FieldConstants.highGoalPosition[0]-turretPosition[0]) + hardware.turret.getTurretOffset(distanceToGoal);
             telemetry.addData("angleToGoal",Math.toDegrees(angleToGoal));
