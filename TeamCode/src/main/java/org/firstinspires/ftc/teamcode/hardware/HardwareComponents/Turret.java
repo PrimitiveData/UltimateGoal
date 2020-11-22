@@ -12,7 +12,7 @@ public class Turret {
     public static double ticks_per_radian=15833.3703586*34/45/2*188/180;
     Hardware hardware;
     ContRotServo[] turretServos;
-    private double startTurretPosition;
+    public double startTurretPosition;
     public PIDwithBasePower turretPID;
     public Motor encoder;
     public double CENTER_TO_TURRET_INCHES;

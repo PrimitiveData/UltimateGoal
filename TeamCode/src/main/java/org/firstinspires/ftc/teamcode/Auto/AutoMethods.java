@@ -36,6 +36,6 @@ public abstract class AutoMethods extends LinearOpMode {
         hardware.mag.pushInRings();
         sleep(175);
         hardware.mag.setRingPusherResting();
-        sleep(175);
+        sleep(200);
     }
 }

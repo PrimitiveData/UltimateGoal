@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.FieldConstants;
 import org.firstinspires.ftc.teamcode.MathFunctions;
 import org.firstinspires.ftc.teamcode.Ramsete.PathEngine;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
+import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.Mag;
 import org.firstinspires.ftc.teamcode.hardware.HardwareThreadInterface;
 
 @Autonomous(name = "RedAuto", group = "Autonomous")
@@ -71,6 +72,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         if(stack == 0||stack==2) {
             park.init();
         }
+        hardware.mag.setRingPusherResting();
         waitForStart();
         //first powershot
         hardware.turret.turretPID.leewayDistance = Math.toRadians(1);
@@ -82,12 +84,19 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardware.turret.turretPID.setState(Math.toRadians(-180));
         hardware.turret.updatePID = true;
         goToShootPos.run(hardware.time,20,0.7,false);
+        hardware.mag.currentState = Mag.State.COLLECT;
         turnTo(3,1000,hardware);
         shootPowershot(hardware);
+        telemetry.addLine("1st powershot");
+        telemetry.update();
         turnTo(-2,1000,hardware);
         shootPowershot(hardware);
+        telemetry.addLine("2nd powershot");
+        telemetry.update();
         turnTo(-9,1000,hardware);
         shootPowershot(hardware);
+        telemetry.addLine("3rd powershot");
+        telemetry.update();
         //2nd powershot
         /*
         hardware.mag.setRingPusherResting();
