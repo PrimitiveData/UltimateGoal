@@ -97,7 +97,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         shootPowershot(hardware);
         telemetry.addLine("1st powershot");
         telemetry.update();
-        hardware.turret.turretPID.setState(Math.toRadians(-184));
+        hardware.turret.turretPID.setState(Math.toRadians(-185));
         sleep(300);
         shootPowershot(hardware);
         telemetry.addLine("2nd powershot");
@@ -200,29 +200,32 @@ public class UltimateGoalRedAuto extends AutoMethods {
         }else if(stack == 1) {
             turnTo(-360, 1000, hardware);
         }else{
-            turnTo(-111.8,1000,hardware);
+            turnTo(-108,1100,hardware);
 
             hardware.intake.turnIntake(1);
             hardware.turret.updatePID = true;
             hardware.turret.turretPID.setState(Math.toRadians(-40));
-            goStraightEncoder(0.5,5,hardware);
-            goStraightEncoder(0.15,10,hardware);
+            goStraightEncoder(0.5,4.5,hardware);
+            sleep(800);
+            goStraightEncoder(0.5,2,hardware);
+            sleep(800);
+            goStraightEncoder(0.5,1.5,hardware);
+            hardware.shooter.shooterVeloPID.setState(-1600);
             double[] turretPosition = MathFunctions.transposeCoordinate(hardware.getXAbsoluteCenter(),hardware.getYAbsoluteCenter(),-4.72974566929,hardware.angle);
             double distanceToGoal = Math.hypot(turretPosition[1]- FieldConstants.highGoalPosition[1],turretPosition[0] - FieldConstants.highGoalPosition[0]);
             double angleToGoal = Math.atan2(FieldConstants.highGoalPosition[1]-turretPosition[1], FieldConstants.highGoalPosition[0]-turretPosition[0]) + hardware.turret.getTurretOffset(distanceToGoal);
             telemetry.addData("angleToGoal",Math.toDegrees(angleToGoal));
             hardware.shooter.autoRampPositionForHighGoal(distanceToGoal);
             hardware.turret.setTurretAngle(angleToGoal);
-            sleep(750);
-            hardware.mag.feedTopRing();
+            sleep(3000);
             hardware.mag.currentState = Mag.State.TOP;
-            sleep(500);
+            hardware.mag.feedTopRing();
+            sleep(200);
             shootPowershot(hardware);
-            sleep(300);
+            sleep(250);
             shootPowershot(hardware);
-            sleep(300);
+            sleep(250);
             shootPowershot(hardware);
-            sleep(300);
             turnTo(-10.46,750,hardware);
         }
 
@@ -233,10 +236,10 @@ public class UltimateGoalRedAuto extends AutoMethods {
             dropWobbler2.run(hardware.time, 20, 0.7, false);
         }
         else{
-            dropWobbler2.run(hardware.time,10,0.7,false);
+            dropWobbler2.run(hardware.time,40,0.7,false);
         }
         hardware.wobbler.goToAutoWobblerDropPosition();
-        sleep(750);
+        turnTo(0,750,hardware);
         hardware.wobbler.releaseWobble();
         sleep(250);
         hardware.wobbler.goToWobbleStartingPos();
