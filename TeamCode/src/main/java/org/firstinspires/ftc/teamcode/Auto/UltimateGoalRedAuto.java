@@ -217,6 +217,12 @@ public class UltimateGoalRedAuto extends AutoMethods {
             telemetry.addData("angleToGoal",Math.toDegrees(angleToGoal));
             hardware.shooter.autoRampPositionForHighGoal(distanceToGoal);
             hardware.turret.setTurretAngle(angleToGoal);
+            while(!isStopRequested()) {
+                telemetry.addLine("distanceToGoal: " + distanceToGoal + ", angleToGoal: " + angleToGoal + ", turret X: " + turretPosition[0] + ", turret Y: " + turretPosition[1] + ", rampAngle: " + hardware.shooter.rampPostion);
+                telemetry.addData("X",hardware.getX());
+                telemetry.addData("Y",hardware.getY());
+                telemetry.update();
+            }
             sleep(3000);
             hardware.mag.currentState = Mag.State.TOP;
             hardware.mag.feedTopRing();
