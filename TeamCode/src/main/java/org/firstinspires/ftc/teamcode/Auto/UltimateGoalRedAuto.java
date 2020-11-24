@@ -103,6 +103,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
             telemetry.update();
             stack = pipeline.stack;
         }
+        webcam.closeCameraDevice();
         //first powershot
         hardware.turret.turretPID.leewayDistance = Math.toRadians(1);
         hardwareThreadInterface.start();
