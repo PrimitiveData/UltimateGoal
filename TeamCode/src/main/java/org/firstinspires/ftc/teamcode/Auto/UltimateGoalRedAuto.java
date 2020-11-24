@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.Auto.Multithreads.AutoAim;
 import org.firstinspires.ftc.teamcode.Auto.Multithreads.MoveArmDownAfterDropping1stWobbler;
 import org.firstinspires.ftc.teamcode.FieldConstants;
 import org.firstinspires.ftc.teamcode.MathFunctions;
@@ -204,25 +205,16 @@ public class UltimateGoalRedAuto extends AutoMethods {
 
             hardware.intake.turnIntake(1);
             hardware.turret.updatePID = true;
-            hardware.turret.turretPID.setState(Math.toRadians(-50));
+            hardware.shooter.updatePID = true;
+            AutoAim autoAim = new AutoAim(hardware,telemetry,this);
+            autoAim.run();
             goStraightEncoder(0.5,4.5,hardware);
             sleep(800);
             goStraightEncoder(0.5,2,hardware);
             sleep(800);
             goStraightEncoder(0.5,1.5,hardware);
             hardware.shooter.shooterVeloPID.setState(-1600);
-            double[] turretPosition = MathFunctions.transposeCoordinate(hardware.getXAbsoluteCenter(),hardware.getYAbsoluteCenter(),-4.72974566929,hardware.angle);
-            double distanceToGoal = Math.hypot(turretPosition[1]- FieldConstants.highGoalPosition[1],turretPosition[0] - FieldConstants.highGoalPosition[0]);
-            double angleToGoal = Math.atan2(FieldConstants.highGoalPosition[1]-turretPosition[1], FieldConstants.highGoalPosition[0]-turretPosition[0]) + hardware.turret.getTurretOffset(distanceToGoal);
-            telemetry.addData("angleToGoal",Math.toDegrees(angleToGoal));
-            hardware.shooter.autoRampPositionForHighGoal(distanceToGoal);
-            hardware.turret.setTurretAngle(angleToGoal);
-            while(!isStopRequested()) {
-                telemetry.addLine("distanceToGoal: " + distanceToGoal + ", angleToGoal: " + angleToGoal + ", turret X: " + turretPosition[0] + ", turret Y: " + turretPosition[1] + ", rampAngle: " + hardware.shooter.rampPostion);
-                telemetry.addData("X",hardware.getX());
-                telemetry.addData("Y",hardware.getY());
-                telemetry.update();
-            }
+
             sleep(3000);
             hardware.mag.currentState = Mag.State.TOP;
             hardware.mag.feedTopRing();
@@ -232,6 +224,14 @@ public class UltimateGoalRedAuto extends AutoMethods {
             shootPowershot(hardware);
             sleep(300);
             shootPowershot(hardware);
+            autoAim.stopRequested = true;
+            hardware.turret.updatePID=false;
+            hardware.shooter.updatePID=false;
+            while(!isStopRequested()) {
+                telemetry.addData("X",hardware.getX());
+                telemetry.addData("Y",hardware.getY());
+                telemetry.update();
+            }
             turnTo(-10.46,750,hardware);
         }
 
