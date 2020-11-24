@@ -28,6 +28,7 @@ import java.util.List;
 public class Hardware {
     public static double yPosTicksClassVariable = 0;
     public static double xPosTicksClassVariable = 0;
+    public static double angleClassVariable = 0;
     public HardwareMap hardwareMap;
     static Hardware hw;
     public BNO055IMU imu;
@@ -408,6 +409,7 @@ public class Hardware {
         RobotLog.dd("MOTORDEBUG", "Left: "+sixWheelDrive.LF.power+ ", Right: "+sixWheelDrive.RF.power);
             xPosTicksClassVariable = xPosTicks;
             yPosTicksClassVariable = yPosTicks;
+            angleClassVariable = angle;
         previousLateralReading = lateralReading;
             previousAngleReading = angle;
             previousPortReading = portReading;
