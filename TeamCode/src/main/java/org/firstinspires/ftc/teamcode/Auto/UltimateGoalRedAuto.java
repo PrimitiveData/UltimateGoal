@@ -2,19 +2,34 @@ package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.Multithreads.AutoAim;
 import org.firstinspires.ftc.teamcode.Auto.Multithreads.MoveArmDownAfterDropping1stWobbler;
 import org.firstinspires.ftc.teamcode.FieldConstants;
 import org.firstinspires.ftc.teamcode.MathFunctions;
 import org.firstinspires.ftc.teamcode.Ramsete.PathEngine;
+import org.firstinspires.ftc.teamcode.easyopencv.OpenCvCamera;
+import org.firstinspires.ftc.teamcode.easyopencv.OpenCvCameraFactory;
+import org.firstinspires.ftc.teamcode.easyopencv.OpenCvCameraRotation;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.Mag;
 import org.firstinspires.ftc.teamcode.hardware.HardwareThreadInterface;
+import org.firstinspires.ftc.teamcode.vision.UltimateGoalReturnPositionPipeline;
 
 @Autonomous(name = "RedAuto", group = "Autonomous")
 public class UltimateGoalRedAuto extends AutoMethods {
     int stack = 2;
     public void runOpMode(){
+        OpenCvCamera webcam;
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        webcam.openCameraDevice();
+        waitForStart();
+        UltimateGoalReturnPositionPipeline pipeline = new UltimateGoalReturnPositionPipeline();
+        webcam.setPipeline(pipeline);
+        webcam.startStreaming(640,480, OpenCvCameraRotation.UPRIGHT);
+        webcam.resumeViewport();
+
         Hardware hardware = new Hardware(hardwareMap, telemetry);
         HardwareThreadInterface hardwareThreadInterface= new HardwareThreadInterface(hardware, this);
         PathEngine goToShootPos = new PathEngine(40,5,"//sdcard//FIRST//UGauto//goToShootPos.txt",hardware,this);
@@ -83,7 +98,11 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardware.mag.setRingPusherResting();
         hardware.mag.currentState = Mag.State.TOP;
         hardware.mag.magServo.servo.setPosition(0.32);
-        waitForStart();
+        while(!isStarted()){
+            telemetry.addLine("Stack: "+pipeline.stack);
+            telemetry.update();
+            stack = pipeline.stack;
+        }
         //first powershot
         hardware.turret.turretPID.leewayDistance = Math.toRadians(1);
         hardwareThreadInterface.start();

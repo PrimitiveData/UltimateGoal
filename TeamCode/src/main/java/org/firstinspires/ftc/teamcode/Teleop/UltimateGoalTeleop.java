@@ -30,6 +30,7 @@ public class UltimateGoalTeleop extends OpMode {
     boolean shooterOnTogglePrevLoop = false;
     boolean grip = true;
     boolean gripOnToggledPrevLoop = false;
+    boolean gripperResting = true;
     boolean armStateToggledPrevLoop = false;
     public double shooterVelo;
     public boolean teleopStopped = false;
@@ -241,6 +242,7 @@ public class UltimateGoalTeleop extends OpMode {
         if(gamepad2.left_bumper) {
             if(!gripOnToggledPrevLoop) {
                 grip = !grip;
+                gripperResting = false;
             }
             gripOnToggledPrevLoop = true;
         }
@@ -249,10 +251,13 @@ public class UltimateGoalTeleop extends OpMode {
                 gripOnToggledPrevLoop = false;
             }
         }
-        if(grip){
+        if(gripperResting){
+            hardware.wobbler.goToClawRestingPos();
+        }
+        else if(grip){
             hardware.wobbler.gripWobble();
         }else{
-            hardware.wobbler.releaseWobble();
+            hardware.wobbler.goToClawRestingPos();
         }
         if(gamepad2.right_bumper) {
             if(!armStateToggledPrevLoop) {
