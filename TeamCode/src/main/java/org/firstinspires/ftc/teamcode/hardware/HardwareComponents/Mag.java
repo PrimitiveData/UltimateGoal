@@ -5,8 +5,8 @@ import org.firstinspires.ftc.teamcode.hardware.RegServo;
 public class Mag {
     public RegServo magServo;
     RegServo ringPusher;
-    double ringPusherResting = 0.54905;
-    double ringPusherPushedIn = 0.424;
+    double ringPusherResting = 0.56;
+    double ringPusherPushedIn = 0.42;
     double takeRingsPosition=0.4814;
     public double feedTopRingPosition=0.289;
     double feedMiddleRingPosition=0.258;
