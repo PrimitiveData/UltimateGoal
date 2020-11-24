@@ -25,6 +25,9 @@ public class WobblerArm {
     public void gripWobble(){
         wobblerClaw.setPosition(clawGrip);
     }
+    public void goToClawRestingPos(){
+        wobblerClaw.setPosition(clawRestingPos);
+    }
     public void raiseWobble(){
         wobblerArm.setPosition(armRaiseWobble);
     }
@@ -35,6 +38,9 @@ public class WobblerArm {
         wobblerArm.setPosition(armStartingPos);
     }
     public void goToAutoWobblerDropPosition(){wobblerArm.setPosition((armRaiseWobble+armGrabWobblePos)/2);}
+    public void goToArmRestingPos(){
+        wobblerArm.setPosition(armRestingPos);
+    }
     public enum ArmState{
         START,
         GRIP,

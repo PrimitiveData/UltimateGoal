@@ -51,6 +51,10 @@ public class UltimateGoalTeleop extends OpMode {
         shooterVelo = -1600;
         magFlickerController = new MagFlickerController(hardware,this);
         hardware.mag.setRingPusherResting();
+        hardware.wobbler.goToClawRestingPos();
+        hardware.wobbler.goToArmRestingPos();
+        hardware.xPosTicks = Hardware.xPosTicksClassVariable;
+        hardware.yPosTicks = Hardware.yPosTicksClassVariable;
     }
     public double logistic(double input, double constantB, double constantC){
         return constantB*(1/(1+Math.pow(Math.E,-constantC*(input-0.6)))) - constantB/2+0.5532;
