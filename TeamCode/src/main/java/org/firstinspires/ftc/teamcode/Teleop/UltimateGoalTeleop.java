@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.MathFunctions;
 import org.firstinspires.ftc.teamcode.Teleop.Multithreads.MagFlickerController;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.Mag;
+import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.WobblerArm;
 import org.firstinspires.ftc.teamcode.hardware.PID.TurretPID;
 import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPID;
 import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPIDDrivetrain;
@@ -270,6 +271,10 @@ public class UltimateGoalTeleop extends OpMode {
             if(armStateToggledPrevLoop){
                 armStateToggledPrevLoop = false;
             }
+        }
+        if(gamepad2.left_bumper){
+            hardware.wobbler.armState = WobblerArm.ArmState.START;
+            hardware.wobbler.goToArmRestingPos();
         }
         //end powershot
         if(gamepad1.dpad_left){

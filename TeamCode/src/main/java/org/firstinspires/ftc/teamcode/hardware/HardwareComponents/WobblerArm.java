@@ -14,7 +14,7 @@ public class WobblerArm {
     public double clawReleasePos = 0.05;
     public double clawGrip = 0.35;
     public double clawRestingPos = 0.275;
-    ArmState armState = ArmState.START;
+    public ArmState armState = ArmState.START;
     public WobblerArm(RegServo wobblerArm, RegServo wobblerClaw){
         this.wobblerArm = wobblerArm;
         this.wobblerClaw = wobblerClaw;
@@ -62,7 +62,7 @@ public class WobblerArm {
         else if(armState == ArmState.LIFT){
             raiseWobble();
         }else{
-            goToWobbleStartingPos();
+            goToArmRestingPos();
         }
     }
 }
