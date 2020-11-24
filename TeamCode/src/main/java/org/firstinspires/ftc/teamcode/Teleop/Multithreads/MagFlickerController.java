@@ -16,6 +16,7 @@ public class MagFlickerController extends Thread{
     public Hardware hardware;
     UltimateGoalTeleop parentOP;
     boolean shootRingRequested;
+    boolean shootAllRingsRequested;
     boolean firstButtonPress = false;
     int numButtonPresses;
     String TAG = "MagFlickerController";
@@ -24,6 +25,7 @@ public class MagFlickerController extends Thread{
         this.hardware = hardware;
         this.parentOP = parentOP;
         shootRingRequested = false;
+        shootAllRingsRequested = false;
         firstButtonPress = true;
         numButtonPresses = 0;
         try {
@@ -45,6 +47,18 @@ public class MagFlickerController extends Thread{
     }
     public void run(){
         while(!parentOP.teleopStopped){
+            if(shootAllRingsRequested){
+                hardware.mag.currentState = Mag.State.COLLECT;
+                for(int i = 0; i < 3; i++){
+                    hardware.mag.updateStateAndSetPosition();
+                    sleeep(225);
+                    hardware.mag.pushInRings();
+                    sleeep(175);
+                    hardware.mag.setRingPusherResting();
+                    sleeep(100);
+                }
+                hardware.mag.updateStateAndSetPosition();
+            }
             if(shootRingRequested){
                 numButtonPresses++;
                 RobotLog.dd(TAG,numButtonPresses+" press checkpoint 1: " + hardware.mag.currentState.toString());
@@ -109,5 +123,8 @@ public class MagFlickerController extends Thread{
     }
     public void updateMagStateAndSetPosition(){
         shootRingRequested = true;
+    }
+    public void updateMagStateAndSetPositionAndShootAllRings(){
+        shootAllRingsRequested = true;
     }
 }

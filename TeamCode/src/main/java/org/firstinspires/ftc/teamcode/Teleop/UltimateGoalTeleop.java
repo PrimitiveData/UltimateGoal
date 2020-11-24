@@ -168,7 +168,7 @@ public class UltimateGoalTeleop extends OpMode {
         //mag control
         if(gamepad1.right_bumper) {
             if(!magUpdateStateAndSetPositionPrevLoop) {
-                magFlickerController.updateMagStateAndSetPosition();
+                magFlickerController.updateMagStateAndSetPositionAndShootAllRings();
             }
             magUpdateStateAndSetPositionPrevLoop = true;
         }
