@@ -242,7 +242,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
             dropWobbler2.run(hardware.time, 20, 0.7, false);
         }
         else{
-            dropWobbler2.run(hardware.time,40,0.7,false);
+            dropWobbler2.run(hardware.time,60,0.7,false);
         }
         hardware.wobbler.goToAutoWobblerDropPosition();
         turnTo(0,750,hardware);
