@@ -266,7 +266,7 @@ public class UltimateGoalTeleop extends OpMode {
             }
         }
         //end powershot
-        if(gamepad1.a){
+        if(gamepad1.dpad_left){
             hardware.mag.currentState = Mag.State.COLLECT;
             hardware.mag.collectRings();
             manuelRampControl = true;
@@ -274,11 +274,13 @@ public class UltimateGoalTeleop extends OpMode {
             while(Math.abs((hardware.turret.localTurretAngleRadians() - hardware.turret.startTurretPosition))>Math.toRadians(1)){
                 sleeep(10);
             }
-            turnTo(3,1000,hardware);
+            hardware.mag.magServo.servo.setPosition(0.32);
+            turnTo(2,1000,hardware);
+            hardware.mag.feedTopRing();
             shootPowershot(hardware);
-            turnTo(-2,1000,hardware);
+            turnTo(-3,350,hardware);
             shootPowershot(hardware);
-            turnTo(-9,1000,hardware);
+            turnTo(-10.5,250,hardware);
             shootPowershot(hardware);
         }
 
