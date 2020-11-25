@@ -51,12 +51,13 @@ public class MagFlickerController extends Thread{
                 hardware.mag.currentState = Mag.State.COLLECT;
                 for(int i = 0; i < 3; i++){
                     hardware.mag.updateStateAndSetPosition();
-                    sleeep(225);
+                    sleeep(275);
                     hardware.mag.pushInRings();
-                    sleeep(175);
+                    sleeep(150);
                     hardware.mag.setRingPusherResting();
-                    sleeep(100);
+                    sleeep(75);
                 }
+                shootAllRingsRequested=false;
                 hardware.mag.updateStateAndSetPosition();
             }
             if(shootRingRequested){

@@ -13,6 +13,7 @@ public class AutoShootInfo {
         this.rampAngles = new ArrayList<Double>();
         this.turretAngleOffsets = new ArrayList<Double>();
         this.shooterSpeeds = new ArrayList<Double>();
+        distances.add(0.0);
         distances.add(52.0);
         distances.add(56.0);
         distances.add(60.0);
@@ -34,6 +35,7 @@ public class AutoShootInfo {
         distances.add(124.0);
 
         rampAngles.add(0.71);
+        rampAngles.add(0.71);
         rampAngles.add(0.67);
         rampAngles.add(0.63);
         rampAngles.add(0.6);
@@ -46,13 +48,14 @@ public class AutoShootInfo {
         rampAngles.add(0.36);
         rampAngles.add(0.32);
         rampAngles.add(0.27);
+        rampAngles.add(0.23);
+        rampAngles.add(0.23);
         rampAngles.add(0.22);
         rampAngles.add(0.22);
-        rampAngles.add(0.19);
-        rampAngles.add(0.19);
-        rampAngles.add(0.19);
-        rampAngles.add(0.19);
+        rampAngles.add(0.22);
+        rampAngles.add(0.22);
 
+        turretAngleOffsets.add(-8.8);
         turretAngleOffsets.add(-8.8);
         turretAngleOffsets.add(-8.6);
         turretAngleOffsets.add(-7.8);
@@ -87,6 +90,7 @@ public class AutoShootInfo {
         shooterSpeeds.add(-1600.0);
         shooterSpeeds.add(-1600.0);
         shooterSpeeds.add(-1600.0);
+        shooterSpeeds.add(-1600.0);
         shooterSpeeds.add(-1450.0);
         shooterSpeeds.add(-1450.0);
         shooterSpeeds.add(-1450.0);
@@ -99,11 +103,11 @@ public class AutoShootInfo {
         }
 
         for(int i = 0; i < turretAngleOffsets.size(); i++){
-            turretAngleOffsets.set(i, Math.toRadians(turretAngleOffsets.get(i) + 1));
+            turretAngleOffsets.set(i, Math.toRadians(turretAngleOffsets.get(i) - 1));
 
         }
         for(int i = 0; i < rampAngles.size(); i++){
-            rampAngles.set(i, rampAngles.get(i) + 0.08);
+            rampAngles.set(i, rampAngles.get(i)+0.02);
 
         }
     }
