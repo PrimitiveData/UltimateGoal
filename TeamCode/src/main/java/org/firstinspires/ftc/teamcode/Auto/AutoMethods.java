@@ -38,9 +38,9 @@ public abstract class AutoMethods extends LinearOpMode {
         hardware.mag.updateStateAndSetPosition();
     }
     public void goStraightEncoder(double power, double distance, Hardware hardware){
-        double startStarboard = hardware.hub1Motors[3].getCurrentPosition();
-        double startPort = hardware.hub1Motors[0].getCurrentPosition();
-        while(((hardware.hub1Motors[3].getCurrentPosition() - startStarboard) + (hardware.hub1Motors[0].getCurrentPosition() - startPort))/2 < distance*Hardware.ticks_per_rotation/Hardware.circumfrence){
+        double startStarboard = -hardware.hub1Motors[3].getCurrentPosition();
+        double startPort = -hardware.hub1Motors[0].getCurrentPosition();
+        while(((-hardware.hub1Motors[3].getCurrentPosition() - startStarboard) + (-hardware.hub1Motors[0].getCurrentPosition() - startPort))/2 < distance*Hardware.ticks_per_rotation/Hardware.circumfrence){
             telemetry.addLine("startStarboard: "+startStarboard);
             telemetry.addLine("startPort: "+startPort);
             telemetry.addLine("currentStarboard" + hardware.hub1Motors[3].getCurrentPosition());

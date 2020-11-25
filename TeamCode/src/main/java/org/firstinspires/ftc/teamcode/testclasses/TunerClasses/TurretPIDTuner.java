@@ -26,7 +26,7 @@ public class TurretPIDTuner extends LinearOpMode {
             double kDChange = gamepad2.left_stick_y * 0.005;
             double kStaticChange = gamepad2.right_stick_y * 0.005;
             telemetry.addLine("kPChange: "+kPChange+", kDChange: "+kDChange +", kIChange: "+kIChange+", kStaticChange: "+kStaticChange);
-            hardware.turret.turretPID.kP += kPChange;
+            hardware.turret.turretPID.kP = hardware.turret.turretPID.kP + kPChange;
             hardware.turret.turretPID.kI += kIChange;
             hardware.turret.turretPID.kStatic += kStaticChange;
             hardware.turret.turretPID.kD += kDChange;

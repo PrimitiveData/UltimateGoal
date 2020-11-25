@@ -260,9 +260,9 @@ public class Hardware {
             }
         }
 
-            int portReading=hub1Motors[0].getCurrentPosition();
-            int starboardReading=hub1Motors[3].getCurrentPosition();
-            int lateralReading=-hub1Motors[1].getCurrentPosition();
+            int portReading=-hub1Motors[0].getCurrentPosition();
+            int starboardReading=-hub1Motors[3].getCurrentPosition();
+            int lateralReading=hub1Motors[1].getCurrentPosition();
         if(firstLoop){
             startTime = time.milliseconds();
             prevTime = startTime;

@@ -21,7 +21,7 @@ public class AutoAim extends Thread {
         this.parentOP = parentOP;
         stopRequested = false;
     }
-    public void start(){
+    public void run(){
         while(!parentOP.isStopRequested()&&!stopRequested) {
             double[] turretPosition = MathFunctions.transposeCoordinate(hardware.getXAbsoluteCenter(), hardware.getYAbsoluteCenter(), -4.72974566929, hardware.angle);
             telemetry.addLine("Turret Position: " + turretPosition[0] + ", " + turretPosition[1]);
