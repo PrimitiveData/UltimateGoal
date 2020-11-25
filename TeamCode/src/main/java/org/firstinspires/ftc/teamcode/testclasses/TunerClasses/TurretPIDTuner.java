@@ -21,10 +21,11 @@ public class TurretPIDTuner extends LinearOpMode {
             else if(gamepad1.x){
                 turretPID.setState(Math.toRadians(-90));
             }
-            hardware.turret.turretPID.kP += gamepad1.left_stick_y*0.0005;
-            hardware.turret.turretPID.kI += gamepad1.right_stick_y*0.0005;
-            hardware.turret.turretPID.kD += gamepad2.left_stick_y*0.0005;
-            hardware.turret.turretPID.kStatic += gamepad2.right_stick_y*0.0005;
+            double kPChange = gamepad1.left_stick_y * 0.005;
+            double kIChange = gamepad1.right_stick_y * 0.005;
+            double kDChange = gamepad2.left_stick_y * 0.005;
+            double kStaticChange = gamepad2.right_stick_y * 0.005;
+            telemetry.addLine("kPChange: "+kPChange+", kDChange: "+kDChange +", kIChange: "+kIChange+", kStaticChange: "+kStaticChange);
             telemetry.addLine("kP: "+turretPID.kP+", kD: "+turretPID.kD +", kI: "+turretPID.kI+", kStatic: "+turretPID.kStatic);
             telemetry.addData("heading: ", Math.toDegrees(hardware.turret.localTurretAngleRadians()));
             double output = turretPID.updateCurrentStateAndGetOutput(hardware.turret.localTurretAngleRadians());
