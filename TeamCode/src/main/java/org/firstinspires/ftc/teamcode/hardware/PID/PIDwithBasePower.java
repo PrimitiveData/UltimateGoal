@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.hardware.PID;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class PIDwithBasePower extends TurretPID {
-    double kStatic;
+    public double kStatic;
     public double leewayDistance;
     public PIDwithBasePower(double kP, double kI, double kD, double kStatic, double leewayDistance, double disableIntegralThreshold, ElapsedTime time) {
         super(kP, kI, kD, disableIntegralThreshold, time);

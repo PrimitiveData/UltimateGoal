@@ -272,7 +272,7 @@ public class UltimateGoalTeleop extends OpMode {
                 armStateToggledPrevLoop = false;
             }
         }
-        if(gamepad2.left_bumper){
+        if(gamepad2.right_trigger>0){
             hardware.wobbler.armState = WobblerArm.ArmState.START;
             hardware.wobbler.goToArmRestingPos();
         }
