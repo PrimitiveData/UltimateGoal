@@ -56,7 +56,7 @@ public class Turret {
         turretPID.setState(desiredLocalTurretAngle);
     }
     public void updateTurretPID(){
-        double output = turretPID.updateCurrentStateAndGetOutput(localTurretAngleRadians() - startTurretPosition);
+        double output = turretPID.updateCurrentStateAndGetOutput(localTurretAngleRadians());
         setAllTurretServoPowers(output);
     }
     public double[] getTurretPosition(){

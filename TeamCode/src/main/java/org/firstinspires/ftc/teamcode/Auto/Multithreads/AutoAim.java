@@ -30,6 +30,7 @@ public class AutoAim extends Thread {
             telemetry.addData("angleToGoal", Math.toDegrees(angleToGoal));
             hardware.shooter.autoRampPositionForHighGoal(distanceToGoal);
             hardware.turret.setTurretAngle(angleToGoal);
+            telemetry.update();
         }
     }
 }

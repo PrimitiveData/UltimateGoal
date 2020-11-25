@@ -44,20 +44,26 @@ public class UltimateGoalTeleop extends OpMode {
     boolean dPadLeftToggledPrevLoop = false;
     boolean dPadDownToggledPrevLoop = false;
     MagFlickerController magFlickerController;
+    boolean firstLoop;
+    double startAngle;
     public void init(){
         /*if (T265.slamra == null) {
             T265.slamra = new T265Camera(new Transform2d(),T265.ODOMETRY_COVARIANCE, hardwareMap.appContext);
         }*/
+        startAngle = Hardware.angleClassVariable;
+        telemetry.addData("startAngle",startAngle);
         hardware = new Hardware(hardwareMap,telemetry);
+        hardware.xPosTicks = Hardware.xPosTicksClassVariable;
+        hardware.yPosTicks = Hardware.yPosTicksClassVariable;
+        hardware.angle = startAngle;
+        hardware.canglePrev = startAngle;
         slowMode = false;
         shooterVelo = -1600;
         magFlickerController = new MagFlickerController(hardware,this);
         hardware.mag.setRingPusherResting();
         hardware.wobbler.goToClawRestingPos();
         hardware.wobbler.goToArmRestingPos();
-        hardware.xPosTicks = Hardware.xPosTicksClassVariable;
-        hardware.yPosTicks = Hardware.yPosTicksClassVariable;
-        hardware.angle = Hardware.angleClassVariable;
+        firstLoop = true;
     }
     public double logistic(double input, double constantB, double constantC){
         return constantB*(1/(1+Math.pow(Math.E,-constantC*(input-0.6)))) - constantB/2+0.5532;
@@ -368,6 +374,11 @@ public class UltimateGoalTeleop extends OpMode {
             if(dPadRightToggledPrevLoop){
                 dPadRightToggledPrevLoop = false;
             }
+        }
+        if(firstLoop){
+            hardware.angle = startAngle;
+            hardware.canglePrev = startAngle;
+            firstLoop=false;
         }
     }
     public void stop(){

@@ -82,7 +82,7 @@ public class Hardware {
     public boolean updatePID;
     public double prevLocalY;
     public double banglePrev=0;
-    double canglePrev=0;
+    public double canglePrev=0;
     public double danglePrev=0;
     public double localY;
     public double localX;
