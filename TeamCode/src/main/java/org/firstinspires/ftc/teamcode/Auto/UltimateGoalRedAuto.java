@@ -123,7 +123,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         shootPowershot(hardware);
         telemetry.addLine("2nd powershot");
         telemetry.update();
-        hardware.turret.turretPID.setState(Math.toRadians(-190.5));
+        hardware.turret.turretPID.setState(Math.toRadians(-189));
         sleep(250);
         shootPowershot(hardware);
         telemetry.addLine("3rd powershot");

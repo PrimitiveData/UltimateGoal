@@ -12,7 +12,7 @@ public class TurretPIDTuner extends LinearOpMode {
         Hardware hardware = new Hardware(hardwareMap, telemetry);
         waitForStart();
         hardware.sendT265OdoData = false;
-        PIDwithBasePower turretPID = new PIDwithBasePower(0.75/Math.toRadians(40),0.3,0.25,0.25,Math.toRadians(3),Math.toRadians(20), hardware.time);
+        PIDwithBasePower turretPID = new PIDwithBasePower(0.87,0.7,0.3,0.15,Math.toRadians(0.75),Math.toRadians(20), hardware.time);
         turretPID.setState(Math.toRadians(-90));
         while(!isStopRequested()) {
             if(gamepad1.y){
@@ -26,10 +26,10 @@ public class TurretPIDTuner extends LinearOpMode {
             double kDChange = gamepad2.left_stick_y * 0.005;
             double kStaticChange = gamepad2.right_stick_y * 0.005;
             telemetry.addLine("kPChange: "+kPChange+", kDChange: "+kDChange +", kIChange: "+kIChange+", kStaticChange: "+kStaticChange);
-            hardware.turret.turretPID.kP += kPChange;
-            hardware.turret.turretPID.kI += kIChange;
-            hardware.turret.turretPID.kStatic += kStaticChange;
-            hardware.turret.turretPID.kD += kDChange;
+            turretPID.kP = turretPID.kP + kPChange;
+            turretPID.kI = turretPID.kI + kIChange;
+            turretPID.kStatic = turretPID.kStatic + kStaticChange;
+            turretPID.kD = turretPID.kD + kDChange;
             telemetry.addLine("kP: "+turretPID.kP+", kD: "+turretPID.kD +", kI: "+turretPID.kI+", kStatic: "+turretPID.kStatic);
             telemetry.addData("heading: ", Math.toDegrees(hardware.turret.localTurretAngleRadians()));
             double output = turretPID.updateCurrentStateAndGetOutput(hardware.turret.localTurretAngleRadians());
