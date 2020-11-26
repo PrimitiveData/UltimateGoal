@@ -40,20 +40,36 @@ public abstract class AutoMethods extends LinearOpMode {
     public void goStraightEncoder(double power, double distance, Hardware hardware){
         double startStarboard = -hardware.hub1Motors[3].getCurrentPosition();
         double startPort = -hardware.hub1Motors[0].getCurrentPosition();
-        while(((-hardware.hub1Motors[3].getCurrentPosition() - startStarboard) + (-hardware.hub1Motors[0].getCurrentPosition() - startPort))/2 < distance*Hardware.ticks_per_rotation/Hardware.circumfrence){
-            telemetry.addLine("startStarboard: "+startStarboard);
-            telemetry.addLine("startPort: "+startPort);
-            telemetry.addLine("currentStarboard" + hardware.hub1Motors[3].getCurrentPosition());
-            telemetry.addLine("currentPort" + hardware.hub1Motors[0].getCurrentPosition());
-            telemetry.addLine("portDiff: "+(hardware.hub1Motors[0].getCurrentPosition()-startPort));
-            telemetry.addLine("starboardDiff: "+(hardware.hub1Motors[3].getCurrentPosition()-startStarboard));
-            telemetry.update();
-            hardware.sixWheelDrive.LF.setPower(power);
-            hardware.sixWheelDrive.LB.setPower(power);
-            hardware.sixWheelDrive.RF.setPower(power);
-            hardware.sixWheelDrive.RB.setPower(power);
+        if(distance > 0) {
+            while (((-hardware.hub1Motors[3].getCurrentPosition() - startStarboard) + (-hardware.hub1Motors[0].getCurrentPosition() - startPort)) / 2 < distance * Hardware.ticks_per_rotation / Hardware.circumfrence) {
+                telemetry.addLine("startStarboard: " + startStarboard);
+                telemetry.addLine("startPort: " + startPort);
+                telemetry.addLine("currentStarboard" + hardware.hub1Motors[3].getCurrentPosition());
+                telemetry.addLine("currentPort" + hardware.hub1Motors[0].getCurrentPosition());
+                telemetry.addLine("portDiff: " + (hardware.hub1Motors[0].getCurrentPosition() - startPort));
+                telemetry.addLine("starboardDiff: " + (hardware.hub1Motors[3].getCurrentPosition() - startStarboard));
+                telemetry.update();
+                hardware.sixWheelDrive.LF.setPower(power);
+                hardware.sixWheelDrive.LB.setPower(power);
+                hardware.sixWheelDrive.RF.setPower(power);
+                hardware.sixWheelDrive.RB.setPower(power);
+            }
         }
-
+        else if(distance < 0){
+            while (((-hardware.hub1Motors[3].getCurrentPosition() - startStarboard) + (-hardware.hub1Motors[0].getCurrentPosition() - startPort)) / 2 > distance * Hardware.ticks_per_rotation / Hardware.circumfrence) {
+                telemetry.addLine("startStarboard: " + startStarboard);
+                telemetry.addLine("startPort: " + startPort);
+                telemetry.addLine("currentStarboard" + hardware.hub1Motors[3].getCurrentPosition());
+                telemetry.addLine("currentPort" + hardware.hub1Motors[0].getCurrentPosition());
+                telemetry.addLine("portDiff: " + (hardware.hub1Motors[0].getCurrentPosition() - startPort));
+                telemetry.addLine("starboardDiff: " + (hardware.hub1Motors[3].getCurrentPosition() - startStarboard));
+                telemetry.update();
+                hardware.sixWheelDrive.LF.setPower(power);
+                hardware.sixWheelDrive.LB.setPower(power);
+                hardware.sixWheelDrive.RF.setPower(power);
+                hardware.sixWheelDrive.RB.setPower(power);
+            }
+        }
         hardware.sixWheelDrive.LF.setPower(0);
         hardware.sixWheelDrive.LB.setPower(0);
         hardware.sixWheelDrive.RF.setPower(0);
