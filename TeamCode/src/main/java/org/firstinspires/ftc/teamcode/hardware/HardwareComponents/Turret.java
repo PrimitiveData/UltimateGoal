@@ -27,7 +27,7 @@ public class Turret {
         encoder.readRequested = true;
         startTurretPosition = localTurretAngleRadians();
         //turretPID = new TurretPID(1,1,1,Math.toRadians(20),hardware.time);
-        turretPID = new PIDwithBasePower(0.87,0.7,0.304,0.14,Math.toRadians(0.75),Math.toRadians(20), hardware.time);
+        turretPID = new PIDwithBasePower(0.97,1.2,0.31,0.09,Math.toRadians(0.75),Math.toRadians(20), hardware.time);
         updatePID = false;
         info = new AutoShootInfo();
     }

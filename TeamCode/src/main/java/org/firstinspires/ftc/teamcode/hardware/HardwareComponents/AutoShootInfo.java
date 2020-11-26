@@ -34,26 +34,26 @@ public class AutoShootInfo {
         distances.add(120.0);
         distances.add(124.0);
 
-        rampAngles.add(0.71);
-        rampAngles.add(0.71);
-        rampAngles.add(0.67);
-        rampAngles.add(0.63);
-        rampAngles.add(0.6);
-        rampAngles.add(0.57);
-        rampAngles.add(0.54);
+        rampAngles.add(0.7);
+        rampAngles.add(0.7);
+        rampAngles.add(0.66);
+        rampAngles.add(0.62);
+        rampAngles.add(0.59);
+        rampAngles.add(0.56);
+        rampAngles.add(0.53);
         rampAngles.add(0.5);
         rampAngles.add(0.46);
         rampAngles.add(0.42);
         rampAngles.add(0.39);
         rampAngles.add(0.36);
         rampAngles.add(0.32);
-        rampAngles.add(0.27);
-        rampAngles.add(0.23);
-        rampAngles.add(0.23);
-        rampAngles.add(0.22);
-        rampAngles.add(0.22);
-        rampAngles.add(0.22);
-        rampAngles.add(0.22);
+        rampAngles.add(0.28);
+        rampAngles.add(0.26);
+        rampAngles.add(0.25);
+        rampAngles.add(0.25);
+        rampAngles.add(0.25);
+        rampAngles.add(0.25);
+        rampAngles.add(0.25);
 
         turretAngleOffsets.add(-8.8);
         turretAngleOffsets.add(-8.8);
@@ -103,11 +103,11 @@ public class AutoShootInfo {
         }
 
         for(int i = 0; i < turretAngleOffsets.size(); i++){
-            turretAngleOffsets.set(i, Math.toRadians(turretAngleOffsets.get(i)-4));
+            turretAngleOffsets.set(i, Math.toRadians(turretAngleOffsets.get(i)));
 
         }
         for(int i = 0; i < rampAngles.size(); i++){
-            rampAngles.set(i, rampAngles.get(i)+0.02);
+            rampAngles.set(i, rampAngles.get(i)+0.01);
 
         }
     }

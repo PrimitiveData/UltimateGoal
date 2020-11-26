@@ -15,6 +15,6 @@ public class goStraight extends AutoMethods {
         waitForStart();
         hardware.updatePID=false;
         hardwareThreadInterface.start();
-        goStraightEncoder(-1,-15,hardware);
+        goStraightEncoder(-0.5,-50,hardware);
     }
 }

@@ -37,7 +37,8 @@ public class WobblerArm {
     public void goToWobbleStartingPos(){
         wobblerArm.setPosition(armStartingPos);
     }
-    public void goToAutoWobblerDropPosition(){wobblerArm.setPosition((armRaiseWobble+armGrabWobblePos)/2);}
+    public void goToAutoWobblerDropPosition(){wobblerArm.setPosition(0.25);}
+    //public void goToAutoWobblerDropPosition(){wobblerArm.setPosition((armRaiseWobble+armGrabWobblePos)/2 - 0.2);}
     public void goToArmRestingPos(){
         wobblerArm.setPosition(armRestingPos);
     }
