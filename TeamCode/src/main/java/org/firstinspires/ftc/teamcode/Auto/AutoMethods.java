@@ -63,7 +63,7 @@ public abstract class AutoMethods extends LinearOpMode {
                 telemetry.addLine("currentPort" + -hardware.hub1Motors[0].getCurrentPosition());
                 telemetry.addLine("portDiff: " + (-hardware.hub1Motors[0].getCurrentPosition() - startPort));
                 telemetry.addLine("starboardDiff: " + (-hardware.hub1Motors[3].getCurrentPosition() - startStarboard));
-                telemetry.addLine("distanceDiff" + distance);
+                telemetry.addLine("distanceDiff: " + distance);
                 telemetry.update();
                 hardware.sixWheelDrive.LF.setPower(power);
                 hardware.sixWheelDrive.LB.setPower(power);
