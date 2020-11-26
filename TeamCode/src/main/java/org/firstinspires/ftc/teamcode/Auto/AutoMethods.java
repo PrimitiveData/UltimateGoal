@@ -41,8 +41,8 @@ public abstract class AutoMethods extends LinearOpMode {
         hardware.mag.updateStateAndSetPosition();
     }
     public void goStraightEncoder(double power, double distance, Hardware hardware){
-        double startStarboard = -hardware.hub1Motors[3].getCurrentPosition();
-        double startPort = -hardware.hub1Motors[0].getCurrentPosition();
+        int startStarboard = -hardware.hub1Motors[3].getCurrentPosition();
+        int startPort = -hardware.hub1Motors[0].getCurrentPosition();
         if(distance > 0) {
             while (((-hardware.hub1Motors[3].getCurrentPosition() - startStarboard) + (-hardware.hub1Motors[0].getCurrentPosition() - startPort)) / 2 < distance * Hardware.ticks_per_rotation / Hardware.circumfrence) {
                 telemetry.addLine("startStarboard: " + startStarboard);
@@ -59,9 +59,13 @@ public abstract class AutoMethods extends LinearOpMode {
             }
         }
         else if(distance < 0){
+
+             startStarboard = -hardware.hub1Motors[3].getCurrentPosition();
+             startPort = -hardware.hub1Motors[0].getCurrentPosition();
             int currentPort = -hardware.hub1Motors[0].getCurrentPosition();
             int currentStarboard = -hardware.hub1Motors[3].getCurrentPosition();
             RobotLog.dd("DEBUGGOSTRAIGHT","Before the loop starts: current starboard: "+currentStarboard+", current port: "+currentPort);
+            RobotLog.dd("DEBUGGOSTRAIGHT","StartStarboard: "+startStarboard+", StartPort: "+startPort);
             double loops = 1;
             while (((currentStarboard - startStarboard) + (currentPort - startPort)) / 2 > distance * Hardware.ticks_per_rotation / Hardware.circumfrence) {
                 telemetry.addLine("startStarboard: " + startStarboard);
