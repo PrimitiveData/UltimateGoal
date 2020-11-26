@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.hardware.PID.TurretPID;
+
+import java.io.Writer;
 
 public abstract class AutoMethods extends LinearOpMode {
     public void turnTo(double targetAngleRadians, double duration, Hardware hardware) {
@@ -56,15 +59,22 @@ public abstract class AutoMethods extends LinearOpMode {
             }
         }
         else if(distance < 0){
-            while (((-hardware.hub1Motors[3].getCurrentPosition() - startStarboard) + (-hardware.hub1Motors[0].getCurrentPosition() - startPort)) / 2 > distance * Hardware.ticks_per_rotation / Hardware.circumfrence) {
+            int currentPort = -hardware.hub1Motors[0].getCurrentPosition();
+            int currentStarboard = -hardware.hub1Motors[3].getCurrentPosition();
+            RobotLog.dd("DEBUGGOSTRAIGHT","Before the loop starts: current starboard: "+currentStarboard+", current port: "+currentPort);
+            double loops = 1;
+            while (((currentStarboard - startStarboard) + (currentPort - startPort)) / 2 > distance * Hardware.ticks_per_rotation / Hardware.circumfrence) {
                 telemetry.addLine("startStarboard: " + startStarboard);
                 telemetry.addLine("startPort: " + startPort);
-                telemetry.addLine("currentStarboard" + -hardware.hub1Motors[3].getCurrentPosition());
-                telemetry.addLine("currentPort" + -hardware.hub1Motors[0].getCurrentPosition());
-                telemetry.addLine("portDiff: " + (-hardware.hub1Motors[0].getCurrentPosition() - startPort));
-                telemetry.addLine("starboardDiff: " + (-hardware.hub1Motors[3].getCurrentPosition() - startStarboard));
+                telemetry.addLine("currentStarboard: " + currentStarboard);
+                telemetry.addLine("currentPort: " + currentStarboard);
+                telemetry.addLine("portDiff: " + (currentPort - startPort));
+                telemetry.addLine("starboardDiff: " + (currentStarboard - startStarboard));
                 telemetry.addLine("distanceDiff: " + distance);
                 telemetry.update();
+                RobotLog.dd("DEBUGGOSTRAIGHT","On loop "+ loops +": current starboard: "+currentStarboard+", current port: "+currentPort);
+                 currentPort = -hardware.hub1Motors[0].getCurrentPosition();
+                 currentStarboard = -hardware.hub1Motors[3].getCurrentPosition();
                 hardware.sixWheelDrive.LF.setPower(power);
                 hardware.sixWheelDrive.LB.setPower(power);
                 hardware.sixWheelDrive.RF.setPower(power);
