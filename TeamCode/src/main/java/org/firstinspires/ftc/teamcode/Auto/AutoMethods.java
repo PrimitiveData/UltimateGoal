@@ -59,10 +59,11 @@ public abstract class AutoMethods extends LinearOpMode {
             while (((-hardware.hub1Motors[3].getCurrentPosition() - startStarboard) + (-hardware.hub1Motors[0].getCurrentPosition() - startPort)) / 2 > distance * Hardware.ticks_per_rotation / Hardware.circumfrence) {
                 telemetry.addLine("startStarboard: " + startStarboard);
                 telemetry.addLine("startPort: " + startPort);
-                telemetry.addLine("currentStarboard" + hardware.hub1Motors[3].getCurrentPosition());
-                telemetry.addLine("currentPort" + hardware.hub1Motors[0].getCurrentPosition());
-                telemetry.addLine("portDiff: " + (hardware.hub1Motors[0].getCurrentPosition() - startPort));
-                telemetry.addLine("starboardDiff: " + (hardware.hub1Motors[3].getCurrentPosition() - startStarboard));
+                telemetry.addLine("currentStarboard" + -hardware.hub1Motors[3].getCurrentPosition());
+                telemetry.addLine("currentPort" + -hardware.hub1Motors[0].getCurrentPosition());
+                telemetry.addLine("portDiff: " + (-hardware.hub1Motors[0].getCurrentPosition() - startPort));
+                telemetry.addLine("starboardDiff: " + (-hardware.hub1Motors[3].getCurrentPosition() - startStarboard));
+                telemetry.addLine("distanceDiff" + distance);
                 telemetry.update();
                 hardware.sixWheelDrive.LF.setPower(power);
                 hardware.sixWheelDrive.LB.setPower(power);
