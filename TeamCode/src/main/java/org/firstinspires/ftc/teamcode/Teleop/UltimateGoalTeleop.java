@@ -288,21 +288,24 @@ public class UltimateGoalTeleop extends OpMode {
         }
         //end powershot
         if(gamepad1.dpad_left){
-            hardware.mag.currentState = Mag.State.COLLECT;
-            hardware.mag.collectRings();
             manuelRampControl = true;
-            hardware.turret.setTurretAngle(hardware.angle);
-            while(Math.abs((hardware.turret.localTurretAngleRadians() - hardware.turret.startTurretPosition))>Math.toRadians(1)){
-                sleeep(10);
-            }
-            hardware.mag.magServo.servo.setPosition(0.32);
-            turnTo(2,1000,hardware);
             hardware.mag.feedTopRing();
+            hardware.mag.currentState = Mag.State.TOP;
+            hardware.turret.turretPID.setState(Math.toRadians(-178));
+            sleeep(1000);
             shootPowershot(hardware);
-            turnTo(-3,350,hardware);
+            telemetry.addLine("1st powershot");
+            telemetry.update();
+            hardware.turret.turretPID.setState(Math.toRadians(-183.5));
+            sleeep(350);
             shootPowershot(hardware);
-            turnTo(-10.5,250,hardware);
+            telemetry.addLine("2nd powershot");
+            telemetry.update();
+            hardware.turret.turretPID.setState(Math.toRadians(-191.5));
+            sleeep(250);
             shootPowershot(hardware);
+            telemetry.addLine("3rd powershot");
+            telemetry.update();
         }
 
         if(gamepad1.dpad_up){
@@ -394,13 +397,13 @@ public class UltimateGoalTeleop extends OpMode {
             e.printStackTrace();
         }
     }
+
     public void shootPowershot(Hardware hardware) {
-        hardware.mag.updateStateAndSetPosition();
-        sleeep(225);
         hardware.mag.pushInRings();
         sleeep(175);
         hardware.mag.setRingPusherResting();
-        sleeep(175);
+        sleeep(200);
+        hardware.mag.updateStateAndSetPosition();
     }
     public void turnTo(double targetAngleRadians, double duration, Hardware hardware) {
         TurretPID headingPID = new TurretPID(1.2, 6, 0.12, Math.toRadians(20), hardware.time);
