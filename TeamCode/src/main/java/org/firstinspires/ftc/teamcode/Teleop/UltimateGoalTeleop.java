@@ -46,6 +46,7 @@ public class UltimateGoalTeleop extends OpMode {
     MagFlickerController magFlickerController;
     boolean firstLoop;
     double startAngle;
+    public boolean currentlyIncrementingMagDuringShooting;
     public void init(){
         /*if (T265.slamra == null) {
             T265.slamra = new T265Camera(new Transform2d(),T265.ODOMETRY_COVARIANCE, hardwareMap.appContext);
@@ -64,6 +65,7 @@ public class UltimateGoalTeleop extends OpMode {
         hardware.wobbler.goToClawRestingPos();
         hardware.wobbler.goToArmRestingPos();
         firstLoop = true;
+        currentlyIncrementingMagDuringShooting = false;
     }
     public double logistic(double input, double constantB, double constantC){
         return constantB*(1/(1+Math.pow(Math.E,-constantC*(input-0.6)))) - constantB/2+0.5532;
@@ -205,7 +207,9 @@ public class UltimateGoalTeleop extends OpMode {
             double distanceToGoal = Math.hypot(turretPosition[1]- FieldConstants.highGoalPosition[1],turretPosition[0] - FieldConstants.highGoalPosition[0]);
             double angleToGoal = Math.atan2(FieldConstants.highGoalPosition[1]-turretPosition[1], FieldConstants.highGoalPosition[0]-turretPosition[0]) + hardware.turret.getTurretOffset(distanceToGoal);
             telemetry.addData("angleToGoal",Math.toDegrees(angleToGoal));
-            hardware.shooter.autoRampPositionForHighGoal(distanceToGoal);
+            if(!currentlyIncrementingMagDuringShooting) {
+                hardware.shooter.autoRampPositionForHighGoal(distanceToGoal);
+            }
             hardware.turret.updatePID = true;
             hardware.turret.setTurretAngle(angleToGoal);
             shooterVelo = hardware.shooter.autoaimShooterSpeed(distanceToGoal);

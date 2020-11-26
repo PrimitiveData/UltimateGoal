@@ -49,6 +49,7 @@ public class MagFlickerController extends Thread{
         while(!parentOP.teleopStopped){
             if(shootAllRingsRequested){
                 hardware.mag.currentState = Mag.State.COLLECT;
+                parentOP.currentlyIncrementingMagDuringShooting = true;
                 for(int i = 0; i < 3; i++){
                     hardware.mag.updateStateAndSetPosition();
                     sleeep(275);
@@ -56,7 +57,9 @@ public class MagFlickerController extends Thread{
                     sleeep(150);
                     hardware.mag.setRingPusherResting();
                     sleeep(75);
+                    hardware.shooter.setRampPosition(hardware.shooter.rampPostion+=0.1);
                 }
+                parentOP.currentlyIncrementingMagDuringShooting = false;
                 shootAllRingsRequested=false;
                 hardware.mag.updateStateAndSetPosition();
             }
