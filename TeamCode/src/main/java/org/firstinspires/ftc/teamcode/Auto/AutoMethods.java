@@ -77,7 +77,11 @@ public abstract class AutoMethods extends LinearOpMode {
                 telemetry.addLine("distanceDiff: " + distance);
                 telemetry.update();
                 RobotLog.dd("DEBUGGOSTRAIGHT","On loop "+ loops +": current starboard: "+currentStarboard+", current port: "+currentPort);
-                 currentPort = -hardware.hub1Motors[0].getCurrentPosition();
+                RobotLog.dd("DEBUGGOSTRAIGHT","run again is true: "+(((currentStarboard - startStarboard) + (currentPort - startPort)) / 2 > distance * Hardware.ticks_per_rotation / Hardware.circumfrence));
+                RobotLog.dd("DEBUGGOSTRAIGHT","check 1: "+((currentStarboard - startStarboard) + (currentPort - startPort)) / 2);
+                RobotLog.dd("DEBUGGOSTRAIGHT","check 2: "+distance*Hardware.ticks_per_rotation/Hardware.circumfrence);
+                loops++;
+                currentPort = -hardware.hub1Motors[0].getCurrentPosition();
                  currentStarboard = -hardware.hub1Motors[3].getCurrentPosition();
                 hardware.sixWheelDrive.LF.setPower(power);
                 hardware.sixWheelDrive.LB.setPower(power);
