@@ -104,7 +104,7 @@ public class Hardware {
         this.hardwareMap = hardwareMap;
         hw = this;
         Hardware.telemetry = telemetry;
-        batteryVoltage = VelocityPIDDrivetrain.getBatteryVoltage()- SixWheelDrive.kStatic-1;
+        batteryVoltage = 8.62;
         telemetry.addLine("batteryvoltage: "+batteryVoltage);
         telemetry.update();
         updatePID = false;
