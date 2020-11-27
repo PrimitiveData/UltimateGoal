@@ -27,7 +27,7 @@ public class AutoAim extends Thread {
             telemetry.addLine("Turret Position: " + turretPosition[0] + ", " + turretPosition[1]);
             double distanceToGoal = Math.hypot(turretPosition[1] - FieldConstants.highGoalPosition[1], turretPosition[0] - FieldConstants.highGoalPosition[0]);
             double angleToGoal = Math.atan2(FieldConstants.highGoalPosition[1] - turretPosition[1], FieldConstants.highGoalPosition[0] - turretPosition[0]) + hardware.turret.getTurretOffset(distanceToGoal);
-            angleToGoal+=-0.1;
+            angleToGoal+=-0.09;
             telemetry.addData("angleToGoal", Math.toDegrees(angleToGoal));
             hardware.shooter.autoRampPositionForHighGoal(distanceToGoal);
             hardware.turret.setTurretAngle(angleToGoal);

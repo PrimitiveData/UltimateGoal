@@ -104,26 +104,44 @@ public class UltimateGoalRedAuto extends AutoMethods {
         waitForStart();
         webcam.closeCameraDevice();
         //first powershot
-        hardware.turret.turretPID.leewayDistance = Math.toRadians(0.25);
+        hardware.turret.turretPID.leewayDistance = Math.toRadians(0.5);
         hardwareThreadInterface.start();
         hardware.shooter.setRampPosition(0);
         hardware.shooter.shooterVeloPID.setState(-1500);
         hardware.shooter.updatePID = true;
-        hardware.turret.turretPID.setState(Math.toRadians(-180));
+        hardware.turret.turretPID.setState(Math.toRadians(-179) - hardware.angle);
         hardware.turret.updatePID = true;
         goToShootPos.run(hardware.time,30,0.7,false);
         hardware.mag.feedTopRing();
-        sleep(750);
+        /*
+        if((hardware.turret.localTurretAngleRadians()) > Math.toRadians(-178) - hardware.angle){
+            hardware.turret.turretPID.setState(Math.toRadians(-180) - hardware.angle);
+            sleep(400);
+        }
+         */
+        sleep(800);
         shootPowershot(hardware);
         telemetry.addLine("1st powershot");
         telemetry.update();
-        hardware.turret.turretPID.setState(Math.toRadians(-186));
-        sleep(500);
+        hardware.turret.turretPID.setState(Math.toRadians(-184) - hardware.angle);
+        sleep(800);
+        /*
+        if((hardware.turret.localTurretAngleRadians()) < Math.toRadians(-185) - hardware.angle){
+            hardware.turret.turretPID.setState(Math.toRadians(-183) - hardware.angle);
+            sleep(400);
+        }
+         */
         shootPowershot(hardware);
         telemetry.addLine("2nd powershot");
         telemetry.update();
-        hardware.turret.turretPID.setState(Math.toRadians(-191));
-        sleep(500);
+        hardware.turret.turretPID.setState(Math.toRadians(-189.5) - hardware.angle);
+        sleep(800);
+        /*
+        if((hardware.turret.localTurretAngleRadians()) > Math.toRadians(-188) - hardware.angle){
+            hardware.turret.turretPID.setState(Math.toRadians(-190) - hardware.angle);
+            sleep(400);
+        }
+         */
         shootPowershot(hardware);
         telemetry.addLine("3rd powershot");
         telemetry.update();
@@ -179,6 +197,9 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardware.turret.updatePID = true;
         hardware.turret.turretPID.setState(0);
         dropWobbler1.run(hardware.time,20,0.7,false);
+        if(stack == 1){
+            turnTo(0, 1000, hardware);
+        }
         hardware.wobbler.moveArmToGrabPos();
         sleep(500);
         hardware.wobbler.releaseWobble();
@@ -237,7 +258,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
             hardware.turret.updatePID=false;
             hardware.turret.setAllTurretServoPowers(0);
             hardware.shooter.updatePID=false;
-            turnTo(-8.66,1000,hardware);
+            turnTo(14,2000,hardware);
         }else{
             turnTo(-108,1100,hardware);
 
@@ -273,7 +294,12 @@ public class UltimateGoalRedAuto extends AutoMethods {
             dropWobbler2.run(hardware.time,60,0.8,false);
         }
         else if(stack == 1) {
-            dropWobbler2.run(hardware.time, 60, 0.8, false);
+            //dropWobbler2.run(hardware.time, 60, 0.8, false);
+            goStraightEncoder(-0.4,-5, hardware);
+            goStraightEncoder(-0.7,-19,hardware);
+            goStraightEncoder(-0.4,-6, hardware);
+            goStraightEncoder(-0.2,-5, hardware);
+            sleep(250);
         }
         else{
             //dropWobbler2.run(hardware.time,60,0.8,false);
@@ -281,12 +307,18 @@ public class UltimateGoalRedAuto extends AutoMethods {
         }
         hardware.wobbler.goToAutoWobblerDropPosition();
         sleep(400);
+        if(stack == 1){
+            sleep(400);
+        }
         hardware.wobbler.releaseWobble();
         sleep(50);
         hardware.wobbler.goToWobbleStartingPos();
         if(stack == 0) {
             turnTo(-270, 1000, hardware);
             park.run(hardware.time,20,0.7,false);
+        }
+        else if(stack == 1){
+            goStraightEncoder(0.3,4,hardware);
         }
         else if(stack == 2){
             //park.run(hardware.time,40,0.7,true);
