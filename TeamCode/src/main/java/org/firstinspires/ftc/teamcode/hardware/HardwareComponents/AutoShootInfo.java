@@ -34,10 +34,10 @@ public class AutoShootInfo {
         distances.add(120.0);
         distances.add(124.0);
 
-        rampAngles.add(0.7);
-        rampAngles.add(0.7);
-        rampAngles.add(0.66);
-        rampAngles.add(0.62);
+        rampAngles.add(0.69);
+        rampAngles.add(0.69);
+        rampAngles.add(0.65);
+        rampAngles.add(0.61);
         rampAngles.add(0.59);
         rampAngles.add(0.56);
         rampAngles.add(0.53);
