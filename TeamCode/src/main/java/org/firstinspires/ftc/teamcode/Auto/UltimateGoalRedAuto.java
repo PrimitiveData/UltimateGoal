@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.Multithreads.AutoAim;
+import org.firstinspires.ftc.teamcode.Auto.Multithreads.CloseTheCamera;
 import org.firstinspires.ftc.teamcode.Auto.Multithreads.MoveArmDownAfterDropping1stWobbler;
 import org.firstinspires.ftc.teamcode.FieldConstants;
 import org.firstinspires.ftc.teamcode.MathFunctions;
@@ -102,7 +103,8 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardware.mag.currentState = Mag.State.TOP;
         hardware.mag.magServo.servo.setPosition(0.32);
         waitForStart();
-        webcam.closeCameraDevice();
+        CloseTheCamera closeCamera = new CloseTheCamera(webcam);
+        closeCamera.start();
         //first powershot
         hardware.turret.turretPID.leewayDistance = Math.toRadians(0.5);
         hardwareThreadInterface.start();
