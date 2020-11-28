@@ -104,15 +104,19 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardware.mag.currentState = Mag.State.TOP;
         hardware.mag.magServo.servo.setPosition(0.32);
         waitForStart();
+        hardwareThreadInterface.start();
         CloseTheCamera closeCamera = new CloseTheCamera(webcam);
         closeCamera.start();
         RobotLog.dd("CAMERACLOSED","camera closed successfully");
         //first powershot
         hardware.turret.turretPID.leewayDistance = Math.toRadians(0.5);
+        hardware.turret.turretPID.kD = 0.35;
+        hardware.turret.turretPID.kP = 1.1;
+        hardware.turret.turretPID.kI = 4.75;
         hardware.shooter.setRampPosition(0);
         hardware.shooter.shooterVeloPID.setState(-1500);
         hardware.shooter.updatePID = true;
-        hardware.turret.turretPID.setState(Math.toRadians(-178.75) - hardware.angle);
+        hardware.turret.turretPID.setState(Math.toRadians(-180) - hardware.angle);
         hardware.turret.updatePID = true;
         goToShootPos.run(hardware.time,30,0.7,false);
         hardware.mag.feedTopRing();
@@ -137,7 +141,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         shootPowershot(hardware);
         telemetry.addLine("2nd powershot");
         telemetry.update();
-        hardware.turret.turretPID.setState(Math.toRadians(-189.5) - hardware.angle);
+        hardware.turret.turretPID.setState(Math.toRadians(-189) - hardware.angle);
         sleep(1000);
         /*
         if((hardware.turret.localTurretAngleRadians()) > Math.toRadians(-188) - hardware.angle){
@@ -148,6 +152,9 @@ public class UltimateGoalRedAuto extends AutoMethods {
         shootPowershot(hardware);
         telemetry.addLine("3rd powershot");
         telemetry.update();
+        hardware.turret.turretPID.kD = 0.45;
+        hardware.turret.turretPID.kP = 1.4;
+        hardware.turret.turretPID.kI = 4.15;
         //2nd powershot
         /*
         hardware.mag.setRingPusherResting();
