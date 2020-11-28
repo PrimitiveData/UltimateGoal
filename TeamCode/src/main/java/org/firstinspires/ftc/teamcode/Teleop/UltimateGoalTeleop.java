@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.FieldConstants;
 import org.firstinspires.ftc.teamcode.MathFunctions;
 import org.firstinspires.ftc.teamcode.Teleop.Multithreads.MagFlickerController;
+import org.firstinspires.ftc.teamcode.Teleop.Multithreads.ShootPowershot;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.Mag;
 import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.WobblerArm;
@@ -190,6 +191,9 @@ public class UltimateGoalTeleop extends OpMode {
         if(gamepad1.x) {
             if(!manuelRampControlTogglePrevLoop) {
                 manuelRampControl = !manuelRampControl;
+                if(manuelRampControl){
+                    hardware.turret.updatePID = false;
+                }
             }
             manuelRampControlTogglePrevLoop = true;
         }
@@ -199,7 +203,6 @@ public class UltimateGoalTeleop extends OpMode {
             }
         }
         if(manuelRampControl){
-            hardware.turret.updatePID = false;
             hardware.shooter.setRampPosition(hardware.shooter.rampPostion - gamepad2.right_stick_y*0.001);
         }
         else{
@@ -301,28 +304,10 @@ public class UltimateGoalTeleop extends OpMode {
         }
         //end powershot
         if(gamepad1.dpad_left){
-            HardwareThreadInterface hardwareThreadInterface = new HardwareThreadInterface(hardware,this);
-            hardwareThreadInterface.start();
             manuelRampControl = true;
-            hardware.mag.feedTopRing();
-            hardware.mag.currentState = Mag.State.TOP;
             hardware.turret.updatePID = true;
-            hardware.turret.turretPID.setState(MathFunctions.keepAngleWithin180Degrees(Math.toRadians(0)));
-            sleeep(1500);
-            shootPowershot(hardware);
-            telemetry.addLine("1st powershot");
-            telemetry.update();
-            hardware.turret.turretPID.setState(MathFunctions.keepAngleWithin180Degrees(Math.toRadians(-4)));
-            sleeep(1500);
-            shootPowershot(hardware);
-            telemetry.addLine("2nd powershot");
-            telemetry.update();
-            hardware.turret.turretPID.setState(MathFunctions.keepAngleWithin180Degrees(Math.toRadians(-9)));
-            sleeep(1500);
-            shootPowershot(hardware);
-            telemetry.addLine("3rd powershot");
-            telemetry.update();
-            hardwareThreadInterface.stopLooping = true;
+            ShootPowershot shootPowershot = new ShootPowershot(hardware,this,telemetry);
+            shootPowershot.start();
         }
 
         if(gamepad1.dpad_up){
