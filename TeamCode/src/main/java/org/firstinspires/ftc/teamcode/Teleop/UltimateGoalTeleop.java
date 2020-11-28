@@ -282,7 +282,7 @@ public class UltimateGoalTeleop extends OpMode {
         else if(grip){
             hardware.wobbler.gripWobble();
         }else{
-            hardware.wobbler.goToClawRestingPos();
+            hardware.wobbler.releaseWobble();
         }
         if(gamepad2.right_bumper) {
             if(!armStateToggledPrevLoop) {
