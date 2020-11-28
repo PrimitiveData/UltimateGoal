@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.Multithreads.AutoAim;
@@ -105,6 +106,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         waitForStart();
         CloseTheCamera closeCamera = new CloseTheCamera(webcam);
         closeCamera.start();
+        RobotLog.dd("CAMERACLOSED","camera closed successfully");
         //first powershot
         hardware.turret.turretPID.leewayDistance = Math.toRadians(0.5);
         hardwareThreadInterface.start();
