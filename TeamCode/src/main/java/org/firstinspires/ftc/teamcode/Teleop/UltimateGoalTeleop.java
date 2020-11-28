@@ -322,9 +322,16 @@ public class UltimateGoalTeleop extends OpMode {
         }
 
         if(gamepad1.dpad_up){
-            shooterVelo -= 0.5;
-        }else if(gamepad1.dpad_down){
-            shooterVelo += 0.5;
+            hardware.xPosTicks = -3.25 * Hardware.ticks_per_rotation/Hardware.circumfrence;
+            hardware.yPosTicks = -3 * Hardware.ticks_per_rotation/Hardware.circumfrence;
+            hardware.angle = 0;
+            hardware.canglePrev = 0;
+        }
+        if(gamepad1.dpad_down){
+            hardware.xPosTicks = -3.25 * Hardware.ticks_per_rotation/Hardware.circumfrence;
+            hardware.yPosTicks = 20.75 * Hardware.ticks_per_rotation/Hardware.circumfrence;
+            hardware.angle = 0;
+            hardware.canglePrev = 0;
         }
         telemetry.addData("shooter On",shooterOn);
         if(hardware.mag.currentState == Mag.State.BOTTOM){
