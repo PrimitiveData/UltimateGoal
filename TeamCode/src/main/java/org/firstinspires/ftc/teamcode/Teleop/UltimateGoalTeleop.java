@@ -9,6 +9,7 @@ import org.firstinspires.ftc.teamcode.Teleop.Multithreads.MagFlickerController;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.Mag;
 import org.firstinspires.ftc.teamcode.hardware.HardwareComponents.WobblerArm;
+import org.firstinspires.ftc.teamcode.hardware.HardwareThreadInterface;
 import org.firstinspires.ftc.teamcode.hardware.PID.TurretPID;
 import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPID;
 import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPIDDrivetrain;
@@ -300,6 +301,8 @@ public class UltimateGoalTeleop extends OpMode {
         }
         //end powershot
         if(gamepad1.dpad_left){
+            HardwareThreadInterface hardwareThreadInterface = new HardwareThreadInterface(hardware,this);
+            hardwareThreadInterface.start();
             manuelRampControl = true;
             hardware.mag.feedTopRing();
             hardware.mag.currentState = Mag.State.TOP;
@@ -319,6 +322,7 @@ public class UltimateGoalTeleop extends OpMode {
             shootPowershot(hardware);
             telemetry.addLine("3rd powershot");
             telemetry.update();
+            hardwareThreadInterface.stopLooping = true;
         }
 
         if(gamepad1.dpad_up){
