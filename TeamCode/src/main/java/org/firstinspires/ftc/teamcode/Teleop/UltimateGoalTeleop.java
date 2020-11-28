@@ -213,6 +213,18 @@ public class UltimateGoalTeleop extends OpMode {
             hardware.turret.updatePID = true;
             hardware.turret.setTurretAngle(angleToGoal);
             shooterVelo = hardware.shooter.autoaimShooterSpeed(distanceToGoal);
+            if(gamepad2.dpad_down){
+                hardware.shooter.rampAngleAdjustmentConstant -= 0.001;
+            }
+            if(gamepad2.dpad_up){
+                hardware.shooter.rampAngleAdjustmentConstant += 0.001;
+            }
+            if(gamepad2.dpad_left){
+                hardware.turret.turretAngleOffsetAdjustmentConstant += Math.toDegrees(0.01);
+            }
+            if(gamepad2.dpad_right){
+                hardware.turret.turretAngleOffsetAdjustmentConstant -= Math.toDegrees(0.01);
+            }
         }
         //shooter
         if(gamepad1.left_bumper) {
@@ -337,7 +349,7 @@ public class UltimateGoalTeleop extends OpMode {
         telemetry.addLine("loops/sec: " + (hardware.loops / ((hardware.time.milliseconds()-hardware.startTime)/1000)));
         telemetry.update();
         //resetting odo
-
+/*
         if(gamepad2.dpad_up) {
             if(!dPadUpToggledPrevLoop) {
                 hardware.yPosTicks -= 0.5* Hardware.ticks_per_rotation/ Hardware.circumfrence;
@@ -381,7 +393,7 @@ public class UltimateGoalTeleop extends OpMode {
             if(dPadRightToggledPrevLoop){
                 dPadRightToggledPrevLoop = false;
             }
-        }
+        }*/
         if(firstLoop){
             hardware.angle = startAngle;
             hardware.canglePrev = startAngle;

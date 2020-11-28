@@ -22,7 +22,7 @@ public class Shooter {
     public boolean updatePID;
     public double rampPostion = 0;
     AutoShootInfo info;
-    public double angleAdjustmentConstant=0;
+    public double rampAngleAdjustmentConstant=0;
     public Shooter(Motor shooterMotor1, Motor shooterMotor2, RegServo shootAngleController, Hardware hardware){
         this.shootAngleController = shootAngleController;
         this.shooterMotor1 = shooterMotor1;
@@ -63,9 +63,7 @@ public class Shooter {
                 rampAngle = slope*(distanceToGoal - info.distances.get(i))+info.rampAngles.get(i);
             }
         }
-        Hardware.telemetry.addData("distToGoal",distanceToGoal);
-        Hardware.telemetry.addData("rampAngle",rampAngle+angleAdjustmentConstant);
-        setRampPosition(rampAngle);
+        setRampPosition(rampAngle+rampAngleAdjustmentConstant);
     }
     public double autoaimShooterSpeed(double distanceToGoal){
         double shooterVelo = 0;
