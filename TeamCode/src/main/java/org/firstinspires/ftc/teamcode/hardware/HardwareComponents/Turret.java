@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.hardware.Motor;
 import org.firstinspires.ftc.teamcode.hardware.PID.PIDwithBasePower;
 
 public class Turret {
-    public static double ticks_per_radian=15833.3703586*34/45/2*188/180;
+    public static double ticks_per_radian=6258.22701028;
     Hardware hardware;
     ContRotServo[] turretServos;
     public double startTurretPosition;
@@ -27,7 +27,7 @@ public class Turret {
         encoder.readRequested = true;
         startTurretPosition = localTurretAngleRadians();
         //turretPID = new TurretPID(1,1,1,Math.toRadians(20),hardware.time);
-        turretPID = new PIDwithBasePower(1.06,3.75,0.32,0.095,Math.toRadians(0.5), Math.toRadians(20), hardware.time);
+        turretPID = new PIDwithBasePower(1.4,4.15,0.45,0.085,Math.toRadians(0.75), Math.toRadians(20), hardware.time);
         updatePID = false;
         info = new AutoShootInfo();
     }
@@ -52,7 +52,7 @@ public class Turret {
         if(desiredLocalTurretAngle > 100){
             desiredLocalTurretAngle = 100;
         }
-        Hardware.telemetry.addData("desiredLocalTurretAngle",desiredLocalTurretAngle);
+        Hardware.telemetry.addData("desiredLocalTurretAngle", Math.toDegrees(desiredLocalTurretAngle));
         turretPID.setState(desiredLocalTurretAngle);
     }
     public void updateTurretPID(){

@@ -102,14 +102,14 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardware.mag.currentState = Mag.State.TOP;
         hardware.mag.magServo.servo.setPosition(0.32);
         waitForStart();
+        hardwareThreadInterface.start();
         webcam.closeCameraDevice();
         //first powershot
         hardware.turret.turretPID.leewayDistance = Math.toRadians(0.5);
-        hardwareThreadInterface.start();
         hardware.shooter.setRampPosition(0);
         hardware.shooter.shooterVeloPID.setState(-1500);
         hardware.shooter.updatePID = true;
-        hardware.turret.turretPID.setState(Math.toRadians(-179.5) - hardware.angle);
+        hardware.turret.turretPID.setState(Math.toRadians(-178.75) - hardware.angle);
         hardware.turret.updatePID = true;
         goToShootPos.run(hardware.time,30,0.7,false);
         hardware.mag.feedTopRing();
@@ -119,12 +119,12 @@ public class UltimateGoalRedAuto extends AutoMethods {
             sleep(400);
         }
          */
-        sleep(1000);
+        sleep(500);
         shootPowershot(hardware);
         telemetry.addLine("1st powershot");
         telemetry.update();
         hardware.turret.turretPID.setState(Math.toRadians(-184) - hardware.angle);
-        sleep(900);
+        sleep(1000);
         /*
         if((hardware.turret.localTurretAngleRadians()) < Math.toRadians(-185) - hardware.angle){
             hardware.turret.turretPID.setState(Math.toRadians(-183) - hardware.angle);
@@ -135,7 +135,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         telemetry.addLine("2nd powershot");
         telemetry.update();
         hardware.turret.turretPID.setState(Math.toRadians(-189.5) - hardware.angle);
-        sleep(900);
+        sleep(1000);
         /*
         if((hardware.turret.localTurretAngleRadians()) > Math.toRadians(-188) - hardware.angle){
             hardware.turret.turretPID.setState(Math.toRadians(-190) - hardware.angle);
@@ -249,7 +249,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
             hardware.shooter.shooterVeloPID.setState(-1600);
             AutoAim autoAim = new AutoAim(hardware,telemetry,this);
             autoAim.start();
-            sleep(3000);
+            sleep(2750);
             hardware.mag.currentState = Mag.State.BOTTOM;
             hardware.mag.feedBottomRing();
             sleep(300);
@@ -287,7 +287,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
             hardware.turret.updatePID=false;
             hardware.turret.setAllTurretServoPowers(0);
             hardware.shooter.updatePID=false;
-            turnTo(-4,1250,hardware);
+            turnTo(-4,750,hardware);
         }
 
         if(stack==0){
@@ -322,7 +322,11 @@ public class UltimateGoalRedAuto extends AutoMethods {
         }
         else if(stack == 2){
             //park.run(hardware.time,40,0.7,true);
-            goStraightEncoder(1,8,hardware);
+            goStraightEncoder(1,6,hardware);
+        }
+        while(!isStopRequested()){
+            telemetry.addLine("X: " + hardware.getXAbsoluteCenter() + "Y: " + hardware.getYAbsoluteCenter());
+            telemetry.update();
         }
 
 
