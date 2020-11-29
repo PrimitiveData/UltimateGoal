@@ -33,6 +33,8 @@ public class ShootPowershot extends Thread{
             }catch(InterruptedException e){
 
             }
+            parentOP.manuelTurretControl = true;
+            hardware.turret.updatePID = true;
         }
     }
     public void run(){

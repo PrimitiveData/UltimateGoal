@@ -24,7 +24,7 @@ public class UltimateGoalTeleop extends OpMode {
     boolean slowMode = false;
     boolean slowModeToggledPrevLoop = false;
     //toggles
-    boolean manuelTurretControl = true;
+    public boolean manuelTurretControl = true;
     boolean manuelTurretControlToggledPrevLoop = false;
     boolean magUpdateStateAndSetPositionPrevLoop = false;
     boolean manuelRampControl = true;
