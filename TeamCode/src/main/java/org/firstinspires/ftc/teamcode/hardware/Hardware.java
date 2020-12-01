@@ -26,6 +26,7 @@ import org.firstinspires.ftc.teamcode.vision.T265;
 import java.util.List;
 
 public class Hardware {
+    public int GYRO_UPDATE_FREQ = 4;
     public static double yPosTicksClassVariable = 0;
     public static double xPosTicksClassVariable = 0;
     public static double angleClassVariable = 0;
@@ -216,7 +217,7 @@ public class Hardware {
         loops++;
         double deltaAngle=0;
         double deltaAngleOdo=0;
-        if(ticker % 8 == 0&&false) {
+        if(ticker % GYRO_UPDATE_FREQ == 0) {
             double bangle = MathFunctions.keepAngleWithin180Degrees(Math.toRadians(imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle));
             double dangle = MathFunctions.keepAngleWithin180Degrees(Math.toRadians(imu2.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle));
             double deltaAngle1 = 360/359.7*(360/357.0446428571429)* MathFunctions.keepAngleWithin180Degrees(bangle - banglePrev);
@@ -228,7 +229,7 @@ public class Hardware {
             angle = (deltaAngle2+deltaAngle1)/2 + canglePrev;
             deltaAngle = angle-previousAngleReading;
             canglePrev = angle;
-            ticker = 1;
+            ticker = 0;
         }
         hub1Motors[0].readRequested = true;
         hub1Motors[1].readRequested = true;
@@ -278,7 +279,7 @@ public class Hardware {
         deltaTime = currentTime-prevTime;
        int PortChange = portReading - previousPortReading;
             int StarboardChange = starboardReading - previousStarboardReading;
-        if(ticker%8!=0||true) {
+        if(ticker%8!=GYRO_UPDATE_FREQ) {
             deltaAngleOdo  =  360/371.952509091*360/355.696047619*360/362.400832143*360.0/361*360/355.123*360/362.5*360/360.74258*(StarboardChange - PortChange) / (odoWidth * ticks_per_rotation / circumfrence);
             angle += deltaAngleOdo;
             deltaAngle = deltaAngleOdo;
