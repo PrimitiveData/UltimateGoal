@@ -216,7 +216,7 @@ public class Hardware {
         loops++;
         double deltaAngle=0;
         double deltaAngleOdo=0;
-        if(ticker % 8 == 0) {
+        if(ticker % 8 == 0&&false) {
             double bangle = MathFunctions.keepAngleWithin180Degrees(Math.toRadians(imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle));
             double dangle = MathFunctions.keepAngleWithin180Degrees(Math.toRadians(imu2.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle));
             double deltaAngle1 = 360/359.7*(360/357.0446428571429)* MathFunctions.keepAngleWithin180Degrees(bangle - banglePrev);
@@ -278,7 +278,7 @@ public class Hardware {
         deltaTime = currentTime-prevTime;
        int PortChange = portReading - previousPortReading;
             int StarboardChange = starboardReading - previousStarboardReading;
-        if(ticker%8!=0) {
+        if(ticker%8!=0||true) {
             deltaAngleOdo  =  360/371.952509091*360/355.696047619*360/362.400832143*360.0/361*360/355.123*360/362.5*360/360.74258*(StarboardChange - PortChange) / (odoWidth * ticks_per_rotation / circumfrence);
             angle += deltaAngleOdo;
             deltaAngle = deltaAngleOdo;
