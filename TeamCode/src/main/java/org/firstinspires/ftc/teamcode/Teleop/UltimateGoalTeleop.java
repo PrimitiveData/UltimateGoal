@@ -217,7 +217,7 @@ public class UltimateGoalTeleop extends OpMode {
             hardware.turret.updatePID = true;
             hardware.turret.setTurretAngle(angleToGoal);
             shooterVelo = hardware.shooter.autoaimShooterSpeed(distanceToGoal);
-            if(gamepad2.dpad_down){
+            /*if(gamepad2.dpad_down){
                 hardware.shooter.rampAngleAdjustmentConstant -= 0.001;
             }
             if(gamepad2.dpad_up){
@@ -228,7 +228,7 @@ public class UltimateGoalTeleop extends OpMode {
             }
             if(gamepad2.dpad_right){
                 hardware.turret.turretAngleOffsetAdjustmentConstant -= Math.toDegrees(0.01);
-            }
+            }*/
         }
         //shooter
         if(gamepad1.left_bumper) {
@@ -345,11 +345,10 @@ public class UltimateGoalTeleop extends OpMode {
         telemetry.addLine("turret Angle: "+Math.toDegrees(hardware.turret.localTurretAngleRadians())+", turret output power: "+gamepad2.left_stick_x);
         telemetry.addLine("loops/sec: " + (hardware.loops / ((hardware.time.milliseconds()-hardware.startTime)/1000)));
         telemetry.update();
-        //resetting odo
-/*
+//correcting autoaim
         if(gamepad2.dpad_up) {
             if(!dPadUpToggledPrevLoop) {
-                hardware.yPosTicks -= 0.5* Hardware.ticks_per_rotation/ Hardware.circumfrence;
+                hardware.shooter.rampAngleAdjustmentConstant += 0.05;
             }
             dPadUpToggledPrevLoop = true;
         }
@@ -360,7 +359,7 @@ public class UltimateGoalTeleop extends OpMode {
         }
         if(gamepad2.dpad_down) {
             if(!dPadDownToggledPrevLoop) {
-                hardware.yPosTicks += 0.5* Hardware.ticks_per_rotation/ Hardware.circumfrence;
+                hardware.shooter.rampAngleAdjustmentConstant -= 0.05;
             }
             dPadDownToggledPrevLoop = true;
         }
@@ -371,7 +370,7 @@ public class UltimateGoalTeleop extends OpMode {
         }
         if(gamepad2.dpad_left) {
             if(!dPadLeftToggledPrevLoop) {
-                hardware.xPosTicks += 0.5* Hardware.ticks_per_rotation/ Hardware.circumfrence;
+                hardware.turret.turretAngleOffsetAdjustmentConstant += Math.toDegrees(1);
             }
             dPadLeftToggledPrevLoop = true;
         }
@@ -382,7 +381,7 @@ public class UltimateGoalTeleop extends OpMode {
         }
         if(gamepad2.dpad_right) {
             if(!dPadRightToggledPrevLoop) {
-                hardware.xPosTicks -= 0.5* Hardware.ticks_per_rotation/ Hardware.circumfrence;
+                hardware.turret.turretAngleOffsetAdjustmentConstant -= Math.toDegrees(1);
             }
             dPadRightToggledPrevLoop = true;
         }
@@ -390,7 +389,7 @@ public class UltimateGoalTeleop extends OpMode {
             if(dPadRightToggledPrevLoop){
                 dPadRightToggledPrevLoop = false;
             }
-        }*/
+        }
         if(firstLoop){
             hardware.angle = startAngle;
             hardware.canglePrev = startAngle;
