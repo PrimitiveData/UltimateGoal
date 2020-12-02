@@ -50,6 +50,7 @@ public class UltimateGoalTeleop extends OpMode {
     double startAngle;
     public boolean currentlyIncrementingMagDuringShooting;
     public void init(){
+        msStuckDetectLoop = 15000;
         /*if (T265.slamra == null) {
             T265.slamra = new T265Camera(new Transform2d(),T265.ODOMETRY_COVARIANCE, hardwareMap.appContext);
         }*/
@@ -304,10 +305,32 @@ public class UltimateGoalTeleop extends OpMode {
         }
         //end powershot
         if(gamepad1.dpad_left){
-            manuelRampControl = true;
+            HardwareThreadInterface hardwareThreadInterface = new HardwareThreadInterface(hardware,this);
+            hardwareThreadInterface.start();
             hardware.turret.updatePID = true;
-            ShootPowershot shootPowershot = new ShootPowershot(hardware,this,telemetry);
-            shootPowershot.start();
+            hardware.mag.feedTopRing();
+            hardware.mag.currentState = Mag.State.TOP;
+            hardware.turret.updatePID = true;
+            hardware.turret.turretPID.setState(MathFunctions.keepAngleWithin180Degrees(Math.toRadians(0)));
+            hardware.turret.updatePID = true;
+            sleeep(1500);
+            shootPowershot(hardware);
+            telemetry.addLine("1st powershot");
+            telemetry.update();
+            hardware.turret.turretPID.setState(MathFunctions.keepAngleWithin180Degrees(Math.toRadians(-4)));
+            hardware.turret.updatePID = true;
+            sleeep(1500);
+            shootPowershot(hardware);
+            telemetry.addLine("2nd powershot");
+            telemetry.update();
+            hardware.turret.turretPID.setState(MathFunctions.keepAngleWithin180Degrees(Math.toRadians(-9)));
+            hardware.turret.updatePID = true;
+            sleeep(1500);
+            shootPowershot(hardware);
+            telemetry.addLine("3rd powershot");
+            telemetry.update();
+            hardware.turret.updatePID = false;
+            hardwareThreadInterface.stopLooping = true;
         }
 
         if(gamepad1.dpad_up){
