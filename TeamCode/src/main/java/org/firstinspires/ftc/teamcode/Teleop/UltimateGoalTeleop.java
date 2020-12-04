@@ -307,6 +307,7 @@ public class UltimateGoalTeleop extends OpMode {
         if(gamepad1.dpad_left){
             HardwareThreadInterface hardwareThreadInterface = new HardwareThreadInterface(hardware,this);
             hardwareThreadInterface.start();
+            shooterVelo = -1450;
             hardware.turret.updatePID = true;
             hardware.mag.feedTopRing();
             hardware.mag.currentState = Mag.State.TOP;
@@ -330,6 +331,7 @@ public class UltimateGoalTeleop extends OpMode {
             telemetry.addLine("3rd powershot");
             telemetry.update();
             hardware.turret.updatePID = false;
+            shooterVelo = -1600;
             hardwareThreadInterface.stopLooping = true;
         }
 
@@ -393,18 +395,18 @@ public class UltimateGoalTeleop extends OpMode {
         }
         if(gamepad2.dpad_left) {
             if(!dPadLeftToggledPrevLoop) {
-                hardware.turret.turretAngleOffsetAdjustmentConstant += Math.toDegrees(1);
+                hardware.turret.turretAngleOffsetAdjustmentConstant += Math.toRadians(1);
             }
             dPadLeftToggledPrevLoop = true;
         }
         else{
-            if(dPadLeftToggledPrevLoop){
+            if(dPadLeftToggledPrevLoop){    
                 dPadLeftToggledPrevLoop = false;
             }
         }
         if(gamepad2.dpad_right) {
             if(!dPadRightToggledPrevLoop) {
-                hardware.turret.turretAngleOffsetAdjustmentConstant -= Math.toDegrees(1);
+                hardware.turret.turretAngleOffsetAdjustmentConstant -= Math.toRadians(1);
             }
             dPadRightToggledPrevLoop = true;
         }
