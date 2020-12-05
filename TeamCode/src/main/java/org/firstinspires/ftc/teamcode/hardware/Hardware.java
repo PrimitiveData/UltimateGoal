@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.vision.T265;
 import java.util.List;
 
 public class Hardware {
-    public int GYRO_UPDATE_FREQ = 4;
+    public int GYRO_UPDATE_FREQ = 10;
     public static double yPosTicksClassVariable = 0;
     public static double xPosTicksClassVariable = 0;
     public static double angleClassVariable = 0;

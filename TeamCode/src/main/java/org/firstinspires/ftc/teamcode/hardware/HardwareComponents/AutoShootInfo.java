@@ -42,18 +42,18 @@ public class AutoShootInfo {
         rampAngles.add(0.56);
         rampAngles.add(0.53);
         rampAngles.add(0.5);
-        rampAngles.add(0.46);
+        rampAngles.add(0.47);
+        rampAngles.add(0.45);
         rampAngles.add(0.42);
         rampAngles.add(0.39);
-        rampAngles.add(0.36);
-        rampAngles.add(0.32);
+        rampAngles.add(0.35);
+        rampAngles.add(0.31);
+        rampAngles.add(0.29);
         rampAngles.add(0.28);
-        rampAngles.add(0.26);
-        rampAngles.add(0.25);
-        rampAngles.add(0.25);
-        rampAngles.add(0.25);
-        rampAngles.add(0.25);
-        rampAngles.add(0.25);
+        rampAngles.add(0.28);
+        rampAngles.add(0.28);
+        rampAngles.add(0.28);
+        rampAngles.add(0.28);
 
         turretAngleOffsets.add(-8.8);
         turretAngleOffsets.add(-8.8);

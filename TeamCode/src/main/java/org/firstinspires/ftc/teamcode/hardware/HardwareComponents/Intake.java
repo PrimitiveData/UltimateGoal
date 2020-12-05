@@ -9,8 +9,8 @@ public class Intake {
     Motor intakeMotor1;
     Motor intakeMotor2;
     RegServo intakeDropperGuard;
-    double holdIntakeUp;
-    double releaseIntake;
+    double holdIntakeUp = 0.36;
+    double releaseIntake = 0;
     public Intake(Motor intakeMotor1, Motor intakeMotor2, RegServo intakeDropperGuard){
         this.intakeMotor1 = intakeMotor1;
         this.intakeMotor2 = intakeMotor2;
