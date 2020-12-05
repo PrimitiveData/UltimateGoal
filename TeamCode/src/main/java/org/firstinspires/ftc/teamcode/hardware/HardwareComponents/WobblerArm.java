@@ -5,11 +5,11 @@ import org.firstinspires.ftc.teamcode.hardware.RegServo;
 public class WobblerArm {
     RegServo wobblerArm;
     //wobbler arm positions
-    public double armGrabWobblePos = 0.32;
-    public double armPushWobblePos = 0.16;
-    public double armRaiseWobble = 0.7;
-    public double armStartingPos = 0.85;
-    public double armRestingPos = 1.0;
+    public double armGrabWobblePos = 0.032;
+    public double armPushWobblePos = 0.0;
+    public double armRaiseWobble = 0.425;
+    public double armStartingPos = 0.575;
+    public double armRestingPos = 0.69;
     RegServo wobblerClaw;
     public double clawReleasePos = 0.05;
     public double clawGrip = 0.35;
@@ -37,7 +37,7 @@ public class WobblerArm {
     public void goToWobbleStartingPos(){
         wobblerArm.setPosition(armStartingPos);
     }
-    public void goToAutoWobblerDropPosition(){wobblerArm.setPosition(0.25);}
+    public void goToAutoWobblerDropPosition(){wobblerArm.setPosition(0);}
     //public void goToAutoWobblerDropPosition(){wobblerArm.setPosition((armRaiseWobble+armGrabWobblePos)/2 - 0.2);}
     public void goToArmRestingPos(){
         wobblerArm.setPosition(armRestingPos);
