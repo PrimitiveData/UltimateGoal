@@ -147,7 +147,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
             sleep(400);
         }
          */
-        turnTo(4, 1000,hardware);
+        turnTo(-5, 800,hardware);
         shootPowershot(hardware);
         telemetry.addLine("1st powershot");
         telemetry.update();
@@ -160,7 +160,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         }
          */
 
-        turnTo(-4, 1000,hardware);
+        turnTo(-9.25, 1000,hardware);
         shootPowershot(hardware);
         telemetry.addLine("2nd powershot");
         telemetry.update();
@@ -173,7 +173,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         }
          */
 
-        turnTo(-9, 1000,hardware);
+        turnTo(1.5, 1200,hardware);
         shootPowershot(hardware);
         telemetry.addLine("3rd powershot");
         telemetry.update();
@@ -238,9 +238,9 @@ public class UltimateGoalRedAuto extends AutoMethods {
         hardware.wobbler.goToAutoWobblerDropPosition();
         sleep(600);
         hardware.wobbler.releaseWobble();
-        sleep(100);
+        sleep(50);
         hardware.wobbler.goToWobbleStartingPos();
-        sleep(100);
+        sleep(50);
 
         if(stack==1){
             turnTo(-90,1000,hardware);
@@ -268,10 +268,12 @@ public class UltimateGoalRedAuto extends AutoMethods {
         }
         hardware.wobbler.gripWobble();
         sleep(250);
-        hardware.wobbler.raiseWobble();
-        sleep(250);
+        if(stack == 1 || stack == 2){
+            hardware.wobbler.raiseWobble();
+            sleep(150);
+        }
         if(stack == 0){
-            turnTo(-360-5.260204696416,3000,hardware);
+            turnTo(-361,3000,hardware);
         }else if(stack == 1) {
             //turnTo(-360, 1000, hardware);
             turnTo(-108,1100,hardware);
@@ -293,13 +295,13 @@ public class UltimateGoalRedAuto extends AutoMethods {
             hardware.shooter.updatePID=false;
             turnTo(14,2000,hardware);
         }else{
-            turnTo(-108,900,hardware);
+            turnTo(-107,1200,hardware);
 
             hardware.intake.turnIntake(1);
             hardware.turret.updatePID = true;
             hardware.shooter.updatePID = true;
             hardware.turret.turretPID.setState(Math.toRadians(-40));
-            goStraightEncoder(0.5,6,hardware);
+            goStraightEncoder(0.5,6.5,hardware);
             sleep(900);
             goStraightEncoder(0.5,1.25,hardware);
             sleep(900);
@@ -308,6 +310,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
             AutoAim autoAim = new AutoAim(hardware,telemetry,this);
             autoAim.start();
             sleep(2500);
+            hardware.intake.turnIntake(0);
             hardware.mag.currentState = Mag.State.TOP;
             hardware.mag.feedTopRing();
             sleep(200);
@@ -320,12 +323,12 @@ public class UltimateGoalRedAuto extends AutoMethods {
             hardware.turret.updatePID=false;
             hardware.turret.setAllTurretServoPowers(0);
 
-            turnTo(-2,1200,hardware);
+            turnTo(-2,1000,hardware);
         }
 
         if(stack==0){
             //dropWobbler2.run(hardware.time,60,0.8,false);
-            goStraightEncoder(-0.4, -24, hardware);
+            goStraightEncoder(-0.4, -22, hardware);
         }
         else if(stack == 1) {
             //dropWobbler2.run(hardware.time, 60, 0.8, false);
@@ -337,22 +340,30 @@ public class UltimateGoalRedAuto extends AutoMethods {
         }
         else{
             //dropWobbler2.run(hardware.time,60,0.8,false);
-            goStraightEncoder(-1,-54,hardware);
-            goStraightEncoder(-0.6,-8,hardware);
-            goStraightEncoder(-0.3, -5,hardware);
-            turnTo(-25,300,hardware);
+            goStraightEncoder(-1,-56,hardware);
+            goStraightEncoder(-0.6,-1,hardware);
+            goStraightEncoder(-0.3,-0.5,hardware);
+            turnTo(-25,200,hardware);
         }
         hardware.wobbler.goToAutoWobblerDropPosition();
-        sleep(500);
+        sleep(400);
         if(stack == 1){
             sleep(400);
         }
         hardware.wobbler.releaseWobble();
-        sleep(200);
+        sleep(100);
+        if(stack == 0){
+            sleep(100);
+        }
         hardware.wobbler.goToWobbleStartingPos();
         sleep(50);
+        if(stack == 0){
+            sleep(100);
+        }
         hardware.wobbler.goToClawRestingPos();
-
+        if(stack == 0){
+            sleep(100);
+        }
         if(stack == 0) {
             turnTo(-270, 1000, hardware);
             park.run(hardware.time,20,0.7,false);
@@ -362,7 +373,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
         }
         else if(stack == 2){
             //park.run(hardware.time,40,0.7,true);
-            goStraightEncoder(1,10,hardware);
+            goStraightEncoder(1,7,hardware);
         }
         while(!isStopRequested()){
             telemetry.addLine("X: " + hardware.getXAbsoluteCenter() + "Y: " + hardware.getYAbsoluteCenter());

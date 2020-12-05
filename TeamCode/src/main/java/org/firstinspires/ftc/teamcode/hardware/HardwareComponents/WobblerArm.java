@@ -5,7 +5,7 @@ import org.firstinspires.ftc.teamcode.hardware.RegServo;
 public class WobblerArm {
     RegServo wobblerArm;
     //wobbler arm positions
-    public double armGrabWobblePos = 0.032;
+    public double armGrabWobblePos = 0.035;
     public double armPushWobblePos = 0.0;
     public double armRaiseWobble = 0.425;
     public double armStartingPos = 0.575;
