@@ -307,7 +307,8 @@ public class UltimateGoalTeleop extends OpMode {
         if(gamepad1.dpad_left){
             HardwareThreadInterface hardwareThreadInterface = new HardwareThreadInterface(hardware,this);
             hardwareThreadInterface.start();
-            hardware.shooter.shooterVeloPID.setState(-1500);
+            hardware.shooter.shooterVeloPID.setState(-1300);
+            hardware.shooter.setRampPosition(0);
             hardware.shooter.updatePID = true;
             hardware.turret.updatePID = true;
             hardware.mag.feedTopRing();
@@ -316,17 +317,17 @@ public class UltimateGoalTeleop extends OpMode {
             hardware.turret.turretPID.setState(0);
             hardware.turret.updatePID = true;
             sleeep(1000);
-            turnTo(-5-0.5, 800,hardware);
+            turnTo(-5, 3000,hardware);
             shootPowershot(hardware);
-            sleeep(1300);
-            turnTo(-9.5, 1000,hardware);
+            sleeep(200);
+            turnTo(-9.5, 3000,hardware);
             shootPowershot(hardware);
             hardware.mag.currentState = Mag.State.MID;
             hardware.mag.feedMidRing();
-            sleeep(1300);
-            turnTo(1.5, 1200,hardware);
+            sleeep(200);
+            turnTo(1.5, 3000,hardware);
             hardware.mag.updateStateAndSetPosition();
-            sleeep(400);
+            sleeep(200);
             shootPowershot(hardware);
             hardware.turret.updatePID = false;
             hardware.shooter.shooterVeloPID.setState(-1600);

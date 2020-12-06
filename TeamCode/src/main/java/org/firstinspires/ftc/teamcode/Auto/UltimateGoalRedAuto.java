@@ -359,7 +359,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
             hardware.turret.updatePID=false;
             hardware.turret.setAllTurretServoPowers(0);
 
-            turnTo(-2.6,1600,hardware);
+            turnTo(-2.75,1600,hardware);
         }
 
         if(stack==0){
