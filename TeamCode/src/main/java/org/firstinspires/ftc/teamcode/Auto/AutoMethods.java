@@ -35,9 +35,9 @@ public abstract class AutoMethods extends LinearOpMode {
 
     public void shootPowershot(Hardware hardware) {
         hardware.mag.pushInRings();
-        sleep(150);
+        sleep(200);
         hardware.mag.setRingPusherResting();
-        sleep(150);
+        sleep(350);
         hardware.mag.updateStateAndSetPosition();
     }
     public void goStraightEncoder(double power, double distance, Hardware hardware){

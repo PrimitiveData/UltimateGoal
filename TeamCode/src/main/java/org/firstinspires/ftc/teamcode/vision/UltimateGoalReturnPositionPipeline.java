@@ -16,7 +16,7 @@ public class UltimateGoalReturnPositionPipeline extends OpenCvPipeline {
     public int HEIGHT1 = 29;//height of 1 ring
     public int BUFFER = 11;
     public int HEIGHT2 = 46;//height of 4 rings
-    public double HThresholdLow = 10;
+    public double HThresholdLow = 5;
     public double HThresholdHigh = 18;
     public int stack;
     @Override

@@ -12,7 +12,7 @@ public class testRamsete extends LinearOpMode {
     public void runOpMode(){
         Hardware hardware = new Hardware(hardwareMap, telemetry);
         HardwareThreadInterface hardwareThreadInterface= new HardwareThreadInterface(hardware, this);
-        PathEngine ramesetePath = new PathEngine(40,5,"//sdcard//FIRST//Points.txt",hardware, this);
+        PathEngine ramesetePath = new PathEngine(40,4.5,"//sdcard//FIRST//Points.txt",hardware, this);
         ramesetePath.init();
         waitForStart();
         hardware.updatePID = true;

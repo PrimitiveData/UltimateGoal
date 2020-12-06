@@ -41,7 +41,7 @@ public class Hardware {
     public List<LynxModule> allHubs;
     private double centerWheelOffset = 4.91142;
 
-    private double centerWheelOffsetChange = 2.6;
+    private double centerWheelOffsetChange = 1.5;
     public static double trackWidth = 16.037;
     private static double portOffset = 7.674; // inches
     private static double starboardOffset = 8.103; //inches
