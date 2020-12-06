@@ -307,30 +307,27 @@ public class UltimateGoalTeleop extends OpMode {
         if(gamepad1.dpad_left){
             HardwareThreadInterface hardwareThreadInterface = new HardwareThreadInterface(hardware,this);
             hardwareThreadInterface.start();
-            hardware.shooter.shooterVeloPID.setState(-1450);
+            hardware.shooter.shooterVeloPID.setState(-1500);
             hardware.shooter.updatePID = true;
             hardware.turret.updatePID = true;
             hardware.mag.feedTopRing();
             hardware.mag.currentState = Mag.State.TOP;
             hardware.turret.updatePID = true;
-            hardware.turret.turretPID.setState(MathFunctions.keepAngleWithin180Degrees(Math.toRadians(2)));
+            hardware.turret.turretPID.setState(0);
             hardware.turret.updatePID = true;
-            sleeep(1500);
+            sleeep(1000);
+            turnTo(-5-0.5, 800,hardware);
             shootPowershot(hardware);
-            telemetry.addLine("1st powershot");
-            telemetry.update();
-            hardware.turret.turretPID.setState(MathFunctions.keepAngleWithin180Degrees(Math.toRadians(-4)));
-            hardware.turret.updatePID = true;
-            sleeep(1500);
+            sleeep(1300);
+            turnTo(-9.5, 1000,hardware);
             shootPowershot(hardware);
-            telemetry.addLine("2nd powershot");
-            telemetry.update();
-            hardware.turret.turretPID.setState(MathFunctions.keepAngleWithin180Degrees(Math.toRadians(-9)));
-            hardware.turret.updatePID = true;
-            sleeep(1500);
+            hardware.mag.currentState = Mag.State.MID;
+            hardware.mag.feedMidRing();
+            sleeep(1300);
+            turnTo(1.5, 1200,hardware);
+            hardware.mag.updateStateAndSetPosition();
+            sleeep(400);
             shootPowershot(hardware);
-            telemetry.addLine("3rd powershot");
-            telemetry.update();
             hardware.turret.updatePID = false;
             hardware.shooter.shooterVeloPID.setState(-1600);
             hardware.shooter.updatePID = false;
@@ -435,9 +432,9 @@ public class UltimateGoalTeleop extends OpMode {
 
     public void shootPowershot(Hardware hardware) {
         hardware.mag.pushInRings();
-        sleeep(175);
+        sleeep(300);
         hardware.mag.setRingPusherResting();
-        sleeep(200);
+        sleeep(350);
         hardware.mag.updateStateAndSetPosition();
     }
     public void turnTo(double targetAngleRadians, double duration, Hardware hardware) {
