@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.Multithreads.AutoAim;
+import org.firstinspires.ftc.teamcode.Auto.Multithreads.AutoAim2;
 import org.firstinspires.ftc.teamcode.Auto.Multithreads.CloseTheCamera;
 import org.firstinspires.ftc.teamcode.Auto.Multithreads.MoveArmDownAfterDropping1stWobbler;
 import org.firstinspires.ftc.teamcode.FieldConstants;
@@ -223,7 +224,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
             sleep(250);
         }*/
         turnTo(-45,400,hardware);
-        AutoAim autoAim1 = new AutoAim(hardware,telemetry,this);
+        AutoAim2 autoAim1 = new AutoAim2(hardware,telemetry,this);
         hardware.turret.turretAngleOffsetAdjustmentConstant = Math.toRadians(5);
         hardware.shooter.rampAngleAdjustmentConstant = 0.05;
         autoAim1.start();
