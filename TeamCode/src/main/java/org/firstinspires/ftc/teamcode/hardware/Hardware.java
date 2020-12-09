@@ -307,8 +307,8 @@ public class Hardware {
 
             }
             else {
-                yPosTicks += (localY) * Math.sin(previousAngleReading + deltaAngle * 0.5) - (localX) * Math.cos(previousAngleReading + deltaAngle * 0.5);//updates Y position
-                xPosTicks += (localY) * Math.cos(previousAngleReading + deltaAngle * 0.5) + (localX) * Math.sin(previousAngleReading + deltaAngle * 0.5);//updates X position
+                yPosTicks += (localY) * (Math.cos(previousAngleReading)-Math.cos(previousAngleReading + deltaAngle))/(deltaAngle) - (localX) * (Math.sin(previousAngleReading + deltaAngle)-Math.sin(previousAngleReading))/(deltaAngle);//updates Y position
+                xPosTicks += (localY) * (Math.sin(previousAngleReading + deltaAngle)-Math.sin(previousAngleReading))/(deltaAngle) + (localX) * (Math.cos(previousAngleReading)-Math.cos(previousAngleReading + deltaAngle))/(deltaAngle);//updates X position
                 yPosTicksAlt += (localYAlt) * Math.sin(previousAngleReading + deltaAngle * 0.5) - (localXAlt) * Math.cos(previousAngleReading + deltaAngle * 0.5);//updates Y position
                 xPosTicksAlt += (localYAlt) * Math.cos(previousAngleReading + deltaAngle * 0.5) + (localXAlt) * Math.sin(previousAngleReading + deltaAngle * 0.5);//updates X position
                 double[] AltAltNewPosition = MathFunctions.transposeCoordinate(xPosTicksAltAlt,yPosTicksAltAlt,localY,-localX,previousAngleReading+deltaAngle*0.5);
