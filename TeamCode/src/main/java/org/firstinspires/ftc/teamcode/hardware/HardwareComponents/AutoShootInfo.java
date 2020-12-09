@@ -107,7 +107,7 @@ public class AutoShootInfo {
 
         }
         for(int i = 0; i < rampAngles.size(); i++){
-            rampAngles.set(i, rampAngles.get(i) - 0.02);
+            rampAngles.set(i, rampAngles.get(i));
 
         }
     }

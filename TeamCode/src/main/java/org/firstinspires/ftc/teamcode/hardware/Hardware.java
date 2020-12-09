@@ -240,7 +240,9 @@ public class Hardware {
                 hub1ReadNeeded = true;
             }
         }
-        allHubs.get(0).clearBulkCache();
+        if(hub1ReadNeeded) {
+            allHubs.get(0).clearBulkCache();
+        }
         for(Motor motor: hub1Motors){
             if(motor != null && motor.readRequested){
                 motor.currentPosition = motor.motor.getCurrentPosition();
@@ -252,7 +254,9 @@ public class Hardware {
             if(motor != null && motor.readRequested)
                 hub2ReadNeeded = true;
         }
-        allHubs.get(1).clearBulkCache(); // depends on which one is not the odo hub
+        if(hub2ReadNeeded) {
+            allHubs.get(1).clearBulkCache();
+        }
         for(int i = 0; i <hub2Motors.length;i++){
             Motor motor = hub2Motors[i];
             if(motor != null && motor.readRequested){
@@ -363,50 +367,49 @@ public class Hardware {
             turret.updateTurretPID();
         }
         for(Motor motor: hub1Motors){
-                if(motor!=null&&motor.setTargetPosRequested){
-                    motor.motor.setTargetPosition(motor.targetPosition);
-                    motor.setTargetPosRequested = false;
-
-                }
+            if(motor!=null&&motor.setTargetPosRequested){
+                motor.motor.setTargetPosition(motor.targetPosition);
+                motor.setTargetPosRequested = false;
             }
-            for(Motor motor: hub1Motors){
-                if(motor!=null&&motor.writePowerRequested){
-                    motor.motor.setPower(motor.power);
-                    motor.writePowerRequested = false;
-                }
-                if(motor!=null&&motor.writeVelocityRequested){
-                    motor.motor.setVelocity(motor.velocity);
-                    motor.writeVelocityRequested = false;
-                }
+        }
+        for(Motor motor: hub1Motors){
+            if(motor!=null&&motor.writePowerRequested){
+                motor.motor.setPower(motor.power);
+                motor.writePowerRequested = false;
             }
-            for(Motor motor: hub2Motors){
-                if(motor!=null&&motor.setTargetPosRequested){
-                    motor.motor.setTargetPosition(motor.targetPosition);
-                    motor.setTargetPosRequested = false;
-                }
+            if(motor!=null&&motor.writeVelocityRequested){
+                motor.motor.setVelocity(motor.velocity);
+                motor.writeVelocityRequested = false;
             }
-            for(Motor motor: hub2Motors){
-                if(motor!=null&&motor.writePowerRequested){
-                    motor.motor.setPower(motor.power);
-                    motor.writePowerRequested = false;
-                }
-                if(motor!=null&&motor.writeVelocityRequested){
-                    motor.motor.setVelocity(motor.velocity);
-                    motor.writeVelocityRequested = false;
-                }
+        }
+        for(Motor motor: hub2Motors){
+            if(motor!=null&&motor.setTargetPosRequested){
+                motor.motor.setTargetPosition(motor.targetPosition);
+                motor.setTargetPosRequested = false;
             }
-            for(RegServo servo: servos){
-                if(servo!=null&&servo.writeRequested){
-                    servo.servo.setPosition(servo.position);
-                    servo.writeRequested = false;
-                }
+        }
+        for(Motor motor: hub2Motors){
+            if(motor!=null&&motor.writePowerRequested){
+                motor.motor.setPower(motor.power);
+                motor.writePowerRequested = false;
             }
-            for(ContRotServo CRservo: CRservos){
-                if(CRservo!=null&&CRservo.writeRequested){
-                    CRservo.servo.setPower(CRservo.power);
-                    CRservo.writeRequested = false;
-                }
+            if(motor!=null&&motor.writeVelocityRequested){
+                motor.motor.setVelocity(motor.velocity);
+                motor.writeVelocityRequested = false;
             }
+        }
+        for(RegServo servo: servos){
+            if(servo!=null&&servo.writeRequested){
+                servo.servo.setPosition(servo.position);
+                servo.writeRequested = false;
+            }
+        }
+        for(ContRotServo CRservo: CRservos){
+            if(CRservo!=null&&CRservo.writeRequested) {
+                CRservo.servo.setPower(CRservo.power);
+                CRservo.writeRequested = false;
+            }
+        }
         RobotLog.dd("MOTORDEBUG", "Left: "+sixWheelDrive.LF.power+ ", Right: "+sixWheelDrive.RF.power);
             xPosTicksClassVariable = xPosTicks;
             yPosTicksClassVariable = yPosTicks;

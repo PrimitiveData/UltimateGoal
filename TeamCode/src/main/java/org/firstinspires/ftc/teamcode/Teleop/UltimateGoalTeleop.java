@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.FieldConstants;
 import org.firstinspires.ftc.teamcode.MathFunctions;
@@ -15,9 +16,11 @@ import org.firstinspires.ftc.teamcode.hardware.PID.TurretPID;
 import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPID;
 import org.firstinspires.ftc.teamcode.hardware.PID.VelocityPIDDrivetrain;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 
-@TeleOp(name = "UltimateGoalTeleop",group="TeleOp")
+@TeleOp(name = "aUltimateGoalTeleop",group="TeleOp")
 public class UltimateGoalTeleop extends OpMode {
     double angleWhenIntakeIsOn = 0; // degrees
     Hardware hardware;
@@ -316,16 +319,33 @@ public class UltimateGoalTeleop extends OpMode {
             hardware.turret.updatePID = true;
             hardware.turret.turretPID.setState(0);
             hardware.turret.updatePID = true;
-            sleeep(1000);
-            turnTo(-5, 3000,hardware);
+            double startingAngle = hardware.angle;
+            sleeep(1500);
+            double powershot1angle = Math.toDegrees(MathFunctions.keepAngleWithinSetRange(startingAngle - Math.toRadians(180), startingAngle + Math.toRadians(180),Math.toRadians(2)+startingAngle));
+            double powershot2angle = Math.toDegrees(MathFunctions.keepAngleWithinSetRange(startingAngle - Math.toRadians(180), startingAngle + Math.toRadians(180),Math.toRadians(-5.5)+startingAngle));
+            double powershot3angle = Math.toDegrees(MathFunctions.keepAngleWithinSetRange(startingAngle - Math.toRadians(180), startingAngle + Math.toRadians(180),Math.toRadians(-10)+startingAngle));
+            RobotLog.dd("TELEOPPOWERSHOT","startingAngle: "+startingAngle + ", powershot1Angle: "+powershot1angle+", powershot2Angle: "+powershot2angle+", powershot3Angle: "+powershot3angle);
+            FileWriter writer = null;
+            try {
+                writer = new FileWriter("//sdcard//FIRST//TeleopPowerShot.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                writer.write("startingAngle: " + Math.toDegrees(startingAngle) + ", powershot1Angle: " + powershot1angle + ", powershot2Angle: " + powershot2angle + ", powershot3Angle: " + powershot3angle);
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            turnTo(powershot1angle,1000,hardware);
             shootPowershot(hardware);
             sleeep(200);
-            turnTo(-9.5, 3000,hardware);
+            turnTo(powershot2angle, 1500,hardware);
             shootPowershot(hardware);
             hardware.mag.currentState = Mag.State.MID;
             hardware.mag.feedMidRing();
             sleeep(200);
-            turnTo(1.5, 3000,hardware);
+            turnTo(powershot3angle,1750,hardware);
             hardware.mag.updateStateAndSetPosition();
             sleeep(200);
             shootPowershot(hardware);
@@ -346,6 +366,14 @@ public class UltimateGoalTeleop extends OpMode {
             hardware.yPosTicks = 20.75 * Hardware.ticks_per_rotation/Hardware.circumfrence;
             hardware.angle = 0;
             hardware.canglePrev = 0;
+        }
+        if(gamepad1.dpad_right){
+            hardware.shooter.setRampPosition(0);
+            hardware.mag.updateStateAndSetPosition();
+            sleeep(500);
+            hardware.mag.pushInRings();
+            sleeep(250);
+            hardware.mag.setRingPusherResting();
         }
         telemetry.addData("shooter On",shooterOn);
         if(hardware.mag.currentState == Mag.State.BOTTOM){
