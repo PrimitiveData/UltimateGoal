@@ -36,6 +36,7 @@ public class Shooter {
         updatePID = false;
         info = new AutoShootInfo();
     }
+    //updates the shooter's PID
     public void updateShooterPIDF(double deltaTime){
         if(firstUpdateShooterPIDFLoop){
             prevShooterPos = shooterMotor2.getCurrentPosition();
@@ -51,10 +52,12 @@ public class Shooter {
         shooterMotor1.setPower(outputPower);
         shooterMotor2.setPower(outputPower);
     }
+    //sets the shooter's ramp position (0-1)
     public void setRampPosition(double position){
         rampPostion = position;
         shootAngleController.setPosition(START_TICKS_RAMP - rampPostion *(START_TICKS_RAMP-END_TICKS_RAMP));
     }
+    //Given the distance to the goal, set the flap angle using regression data
     public void autoRampPositionForHighGoal(double distanceToGoal){
         double rampAngle = 0;
         for(int i = 0; i < info.distances.size()-1; i++){
@@ -65,6 +68,7 @@ public class Shooter {
         }
         setRampPosition(rampAngle+rampAngleAdjustmentConstant);
     }
+    //Given the distance to the goal, set the shooter speed using regression data
     public double autoaimShooterSpeed(double distanceToGoal){
         double shooterVelo = 0;
         for(int i = 0; i < info.distances.size()-1; i++){

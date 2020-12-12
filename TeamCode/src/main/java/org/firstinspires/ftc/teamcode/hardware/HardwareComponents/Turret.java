@@ -32,6 +32,7 @@ public class Turret {
         updatePID = false;
         info = new AutoShootInfo();
     }
+    //gets the turret offset for shooting
     public double getTurretOffset(double distanceToGoal){
         double turretAngleOffset = 0;
         for(int i = 0; i < info.distances.size()-1; i++){
@@ -48,6 +49,7 @@ public class Turret {
         }
         return turretAngleOffset+turretAngleOffsetAdjustmentConstant;
     }
+    //sets the  angle of our turret to the global angle specified in the parameters
     public void setTurretAngle(double globalTurretAngle){//global turret angle is the angle with respect to the field, local is the angle with respect to the robot
         double desiredLocalTurretAngle = MathFunctions.keepAngleWithin180Degrees(globalTurretAngle - hardware.angle);
         if(desiredLocalTurretAngle > 100){
@@ -56,23 +58,28 @@ public class Turret {
         Hardware.telemetry.addData("desiredLocalTurretAngle", Math.toDegrees(desiredLocalTurretAngle));
         turretPID.setState(desiredLocalTurretAngle);
     }
+    //updates the turret's PID
     public void updateTurretPID(){
         double output = turretPID.updateCurrentStateAndGetOutput(localTurretAngleRadians());
         setAllTurretServoPowers(output);
     }
+    //gets the position of the turret on the field
     public double[] getTurretPosition(){
         return MathFunctions.transposeCoordinate(hardware.getXAbsoluteCenter(),hardware.getYAbsoluteCenter(),CENTER_TO_TURRET_INCHES,hardware.angle);
     }
+    //sets the power of all the turret servos
     public void setAllTurretServoPowers(double power){
         for(ContRotServo crservo: turretServos){
             crservo.setPower(power);
         }
     }
+    //points the robot directly towards the high goal
     public void pointTowardsHighGoal(){
         double[] currentPoint = getTurretPosition();
         double angleToPointTo = Math.atan2((currentPoint[1]- FieldConstants.highGoalPosition[1]),(currentPoint[0]-FieldConstants.highGoalPosition[0]));
         setTurretAngle(angleToPointTo);
     }
+    //gets the local position of the turret in radians
     public double localTurretAngleRadians(){
         return -encoder.getCurrentPosition()/ticks_per_radian;
     }
