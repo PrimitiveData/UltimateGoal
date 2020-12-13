@@ -60,10 +60,10 @@ public abstract class AutoMethods extends LinearOpMode {
         }
         else if(distance < 0){
 
-             startStarboard = -hardware.hub1Motors[3].motor.getCurrentPosition();
-             startPort = -hardware.hub1Motors[0].motor.getCurrentPosition();
-            int currentPort = -hardware.hub1Motors[0].motor.getCurrentPosition();
-            int currentStarboard = -hardware.hub1Motors[3].motor.getCurrentPosition();
+             startStarboard = -hardware.hub1Motors[3].getCurrentPosition();
+             startPort = -hardware.hub1Motors[0].getCurrentPosition();
+            int currentPort = -hardware.hub1Motors[0].getCurrentPosition();
+            int currentStarboard = -hardware.hub1Motors[3].getCurrentPosition();
             RobotLog.dd("DEBUGGOSTRAIGHT","Before the loop starts: current starboard: "+currentStarboard+", current port: "+currentPort);
             RobotLog.dd("DEBUGGOSTRAIGHT","StartStarboard: "+startStarboard+", StartPort: "+startPort);
             double loops = 1;
@@ -81,8 +81,8 @@ public abstract class AutoMethods extends LinearOpMode {
                 RobotLog.dd("DEBUGGOSTRAIGHT","check 1: "+((currentStarboard - startStarboard) + (currentPort - startPort)) / 2);
                 RobotLog.dd("DEBUGGOSTRAIGHT","check 2: "+distance*Hardware.ticks_per_rotation/Hardware.circumfrence);
                 loops++;
-                currentPort = -hardware.hub1Motors[0].motor.getCurrentPosition();
-                 currentStarboard = -hardware.hub1Motors[3].motor.getCurrentPosition();
+                currentPort = -hardware.hub1Motors[0].getCurrentPosition();
+                 currentStarboard = -hardware.hub1Motors[3].getCurrentPosition();
                 hardware.sixWheelDrive.LF.setPower(power);
                 hardware.sixWheelDrive.LB.setPower(power);
                 hardware.sixWheelDrive.RF.setPower(power);
