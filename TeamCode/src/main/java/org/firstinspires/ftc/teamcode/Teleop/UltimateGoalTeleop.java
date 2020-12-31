@@ -52,6 +52,7 @@ public class UltimateGoalTeleop extends OpMode {
     boolean firstLoop;
     double startAngle;
     public boolean currentlyIncrementingMagDuringShooting;
+    Thread magThread = new MagFlickerController(hardware, this);
     public void init(){
         msStuckDetectLoop = 15000;
         /*if (T265.slamra == null) {
@@ -79,6 +80,7 @@ public class UltimateGoalTeleop extends OpMode {
     public void start(){
         //T265.slamra.start();
         magFlickerController.start();
+        magThread.start();
     }
     public void loop(){
         double leftPower;
@@ -195,8 +197,10 @@ public class UltimateGoalTeleop extends OpMode {
         if(gamepad1.x) {
             if(!manuelRampControlTogglePrevLoop) {
                 manuelRampControl = !manuelRampControl;
+                hardware.turret.magTracking = !hardware.turret.magTracking;
                 if(manuelRampControl){
                     hardware.turret.updatePID = false;
+                    hardware.turret.magTracking = false;
                 }
             }
             manuelRampControlTogglePrevLoop = true;
@@ -208,6 +212,7 @@ public class UltimateGoalTeleop extends OpMode {
         }
         if(manuelRampControl){
             hardware.shooter.setRampPosition(hardware.shooter.rampPostion - gamepad2.right_stick_y*0.001);
+            hardware.turret.setMagAngle(0.5);
         }
         else{
             double[] turretPosition = MathFunctions.transposeCoordinate(hardware.getXAbsoluteCenter(),hardware.getYAbsoluteCenter(),-4.72974566929,hardware.angle);
@@ -219,6 +224,7 @@ public class UltimateGoalTeleop extends OpMode {
                 hardware.shooter.autoRampPositionForHighGoal(distanceToGoal);
             }
             hardware.turret.updatePID = true;
+            hardware.turret.magTracking = true;
             hardware.turret.setTurretAngle(angleToGoal);
             shooterVelo = hardware.shooter.autoaimShooterSpeed(distanceToGoal);
             /*if(gamepad2.dpad_down){

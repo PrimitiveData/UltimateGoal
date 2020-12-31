@@ -362,6 +362,7 @@ public class UltimateGoalRedAuto extends AutoMethods {
             shootPowershot(hardware);
             autoAim.stopRequested = true;
             hardware.turret.updatePID=false;
+            hardware.turret.setAllTurretServoPowers(0);
 
 
             turnTo(-3.25,1600,hardware);

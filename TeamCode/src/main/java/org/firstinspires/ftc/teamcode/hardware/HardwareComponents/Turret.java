@@ -7,12 +7,15 @@ import org.firstinspires.ftc.teamcode.hardware.ContRotServo;
 import org.firstinspires.ftc.teamcode.hardware.Hardware;
 import org.firstinspires.ftc.teamcode.hardware.Motor;
 import org.firstinspires.ftc.teamcode.hardware.PID.PIDwithBasePower;
+import org.firstinspires.ftc.teamcode.hardware.RegServo;
 
 public class Turret {
     public static double ticks_per_radian=6258.22701028;
     Hardware hardware;
     ContRotServo[] turretServos;
+    RegServo magRotationServo;
     public double startTurretPosition;
+    public boolean magTracking = false;
     public PIDwithBasePower turretPID;
     public Motor encoder;
     public double CENTER_TO_TURRET_INCHES;
@@ -21,7 +24,8 @@ public class Turret {
     public double maxClockwise=180;
     public double turretAngleOffsetAdjustmentConstant=0;
     AutoShootInfo info;
-    public Turret(ContRotServo[] turretServos, Motor encoder, Hardware hardware){
+    public Turret(ContRotServo[] turretServos, RegServo magRotationServo, Motor encoder, Hardware hardware){
+        this.magRotationServo = magRotationServo;
         this.turretServos = turretServos;
         this.hardware = hardware;
         this.encoder = encoder;
@@ -57,6 +61,9 @@ public class Turret {
         }
         Hardware.telemetry.addData("desiredLocalTurretAngle", Math.toDegrees(desiredLocalTurretAngle));
         turretPID.setState(desiredLocalTurretAngle);
+        double magAngle = (desiredLocalTurretAngle / Math.PI / 2) + 1/2;
+        if(magTracking)
+            setMagAngle(magAngle);
     }
     //updates the turret's PID
     public void updateTurretPID(){
@@ -82,5 +89,8 @@ public class Turret {
     //gets the local position of the turret in radians
     public double localTurretAngleRadians(){
         return -encoder.getCurrentPosition()/ticks_per_radian;
+    }
+    public void setMagAngle(double position) {
+        magRotationServo.setPosition(position);
     }
 }
