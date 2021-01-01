@@ -197,10 +197,8 @@ public class UltimateGoalTeleop extends OpMode {
         if(gamepad1.x) {
             if(!manuelRampControlTogglePrevLoop) {
                 manuelRampControl = !manuelRampControl;
-                hardware.turret.magTracking = !hardware.turret.magTracking;
                 if(manuelRampControl){
                     hardware.turret.updatePID = false;
-                    hardware.turret.magTracking = false;
                 }
             }
             manuelRampControlTogglePrevLoop = true;
@@ -224,7 +222,6 @@ public class UltimateGoalTeleop extends OpMode {
                 hardware.shooter.autoRampPositionForHighGoal(distanceToGoal);
             }
             hardware.turret.updatePID = true;
-            hardware.turret.magTracking = true;
             hardware.turret.setTurretAngle(angleToGoal);
             shooterVelo = hardware.shooter.autoaimShooterSpeed(distanceToGoal);
             /*if(gamepad2.dpad_down){
