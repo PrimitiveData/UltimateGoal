@@ -310,6 +310,7 @@ public class UltimateGoalTeleop extends OpMode {
             hardware.wobbler.goToArmRestingPos();
         }
         //end powershot
+
         if(gamepad1.dpad_left){
             HardwareThreadInterface hardwareThreadInterface = new HardwareThreadInterface(hardware,this);
             hardwareThreadInterface.start();
@@ -340,17 +341,17 @@ public class UltimateGoalTeleop extends OpMode {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            turnTo(powershot1angle,1000,hardware);
+            turnToInterrupt(powershot1angle,1000,hardware);
             shootPowershot(hardware);
-            sleeep(200);
-            turnTo(powershot2angle, 1500,hardware);
+            sleeepInterrupt(200);
+            turnToInterrupt(powershot2angle, 1500,hardware);
             shootPowershot(hardware);
             hardware.mag.currentState = Mag.State.MID;
             hardware.mag.feedMidRing();
-            sleeep(200);
-            turnTo(powershot3angle,1750,hardware);
+            sleeepInterrupt(200);
+            turnToInterrupt(powershot3angle,1750,hardware);
             hardware.mag.updateStateAndSetPosition();
-            sleeep(200);
+            sleeepInterrupt(200);
             shootPowershot(hardware);
             hardware.turret.updatePID = false;
             hardware.shooter.shooterVeloPID.setState(-1600);
@@ -464,9 +465,9 @@ public class UltimateGoalTeleop extends OpMode {
 
     public void shootPowershot(Hardware hardware) {
         hardware.mag.pushInRings();
-        sleeep(300);
+        sleeepInterrupt(300);
         hardware.mag.setRingPusherResting();
-        sleeep(350);
+        sleeepInterrupt(350);
         hardware.mag.updateStateAndSetPosition();
     }
     public void turnTo(double targetAngleRadians, double duration, Hardware hardware) {
@@ -480,6 +481,30 @@ public class UltimateGoalTeleop extends OpMode {
         }
         hardware.sixWheelDrive.turn(0);
     }
+
+    public void turnToInterrupt(double targetAngleRadians, double duration, Hardware hardware){
+        TurretPID headingPID = new TurretPID(1.2, 6, 0.12, Math.toRadians(20), hardware.time);
+        headingPID.setState(Math.toRadians(targetAngleRadians));
+        double startTime = hardware.time.milliseconds();
+        while (!teleopStopped && hardware.time.milliseconds() - startTime < duration && !gamepad2.b) {
+            double output = headingPID.updateCurrentStateAndGetOutput(hardware.angle);
+            hardware.sixWheelDrive.turn(output);
+            hardware.loop();
+        }
+        hardware.sixWheelDrive.turn(0);
+    }
+
+    public void sleeepInterrupt(double milliseconds){
+        double startTime = hardware.time.milliseconds();
+        while(hardware.time.milliseconds() < startTime + milliseconds && !teleopStopped && !gamepad2.b){
+            try{
+                Thread.sleep(10);
+            }catch(InterruptedException e){
+
+            }
+        }
+    }
+
     public void sleeep(double milliseconds){
         double startTime = hardware.time.milliseconds();
         while(hardware.time.milliseconds() < startTime + milliseconds && !teleopStopped){

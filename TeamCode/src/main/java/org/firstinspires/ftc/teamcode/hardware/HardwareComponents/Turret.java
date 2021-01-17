@@ -15,7 +15,6 @@ public class Turret {
     ContRotServo[] turretServos;
     RegServo magRotationServo;
     public double startTurretPosition;
-    public boolean magTracking = false;
     public PIDwithBasePower turretPID;
     public Motor encoder;
     public double CENTER_TO_TURRET_INCHES;
@@ -62,8 +61,7 @@ public class Turret {
         Hardware.telemetry.addData("desiredLocalTurretAngle", Math.toDegrees(desiredLocalTurretAngle));
         turretPID.setState(desiredLocalTurretAngle);
         double magAngle = (desiredLocalTurretAngle / Math.PI / 2) + 1/2;
-        if(magTracking)
-            setMagAngle(magAngle);
+        setMagAngle(magAngle);
     }
     //updates the turret's PID
     public void updateTurretPID(){
